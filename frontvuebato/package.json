@@ -1,0 +1,37 @@
+{
+  "name": "frontvuebato",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve --port 8081",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "ajv": "6.12.2",
+    "atob": "2.1.2",
+    "axios": "0.19.2",
+    "moment": "^2.29.0",
+    "vee-validate": "^3.4.0",
+    "vue": "2.6.11",
+    "vue-csrf": "^2.0.4",
+    "vue-router": "3.3.2",
+    "vuetify": "2.2.32",
+    "vuex": "3.4.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-eslint": "4.4.1",
+    "@vue/cli-plugin-router": "4.4.1",
+    "@vue/cli-plugin-vuex": "4.4.1",
+    "@vue/cli-service": "4.4.0",
+    "@vue/eslint-config-airbnb": "5.0.2",
+    "eslint": "6.7.2",
+    "eslint-plugin-import": "2.20.2",
+    "eslint-plugin-vue": "6.2.2",
+    "vue-template-compiler": "2.6.11",
+    "sass": "1.26.8",
+    "sass-loader": "8.0.2",
+    "vue-cli-plugin-vuetify": "2.0.5",
+    "vuetify-loader": "1.4.4"
+  }
+}
