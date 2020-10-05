@@ -5,7 +5,7 @@
       Для работы в системе авторизуйтесь пожалуйста.
     </h2>
     <h2 v-if="isAuthenticated">
-      Здравствуйте, вы зашли как {{ data.email }}
+      Здравствуйте, вы зашли как {{ data.username }}
     </h2>
 
     <h2 v-if="!isAuthenticated">
