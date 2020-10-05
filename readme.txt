@@ -13,6 +13,7 @@ run sql from /sql/tables.sql
 run without tomcat:
 
 mvn spring-boot:run
+npm install
 npm run serve
 
 localhost:8081/frontvuebato/
@@ -22,6 +23,7 @@ run with tomcat:
 mvn clean install
 backvuebato.war to tomcat (webapps)
 
+npm install
 npm run build
 copy from dist to frontvuebato
 in another tomcat, which runs on port 8081
