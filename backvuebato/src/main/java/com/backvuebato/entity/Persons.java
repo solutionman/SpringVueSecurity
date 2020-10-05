@@ -19,4 +19,5 @@ public class Persons {
     private String firstname;
     private String middlename;
     private Date birthday;
+    private String email;
 }

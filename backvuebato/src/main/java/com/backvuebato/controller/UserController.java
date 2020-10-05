@@ -35,7 +35,7 @@ public class UserController {
         profile.put("second_name", person.getFamilyname());
         profile.put("middle_name", person.getMiddlename());
         profile.put("birthday", person.getBirthday());
-        profile.put("email", user.getUsername());
+        profile.put("email", person.getEmail());
 
         return profile;
     }
@@ -57,7 +57,7 @@ public class UserController {
         profile.put("second_name", person.getFamilyname());
         profile.put("middle_name", person.getMiddlename());
         profile.put("birthday", person.getBirthday());
-        profile.put("email", user.getUsername());
+        profile.put("email", person.getEmail());
 
         return profile;
     }
