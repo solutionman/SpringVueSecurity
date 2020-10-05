@@ -19,6 +19,10 @@
       <v-toolbar flat>
         <v-toolbar-title>Пользователи системы</v-toolbar-title>
         <v-spacer></v-spacer>
+        <v-btn @click="addNewUser" >
+          Добавить пользователя
+        </v-btn>
+        <v-spacer></v-spacer>
         <v-switch
             v-model="singleExpand"
             label="Single expand"
@@ -43,6 +47,8 @@
   </v-card>
 </template>
 <script>
+import router from "@/router";
+
 export default {
   data () {
     return {
@@ -120,6 +126,12 @@ export default {
       deep: true
     }
   },
+  methods: {
+    addNewUser (){
+      console.log("add user");
+      router.push({ name: 'NewUser' });
+    }
+  }
   // mounted() {
   //   this.loading = true;
   //   let options = {};

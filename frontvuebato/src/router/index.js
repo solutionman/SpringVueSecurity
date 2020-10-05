@@ -5,6 +5,7 @@ import NotFound from '../components/NotFound.vue';
 import SignIn from '../components/SignIn.vue';
 import Profile from "@/components/Profile";
 import Persons from "@/components/Persons";
+import NewUser from "@/components/NewUser";
 
 
 Vue.use(Router);
@@ -26,6 +27,11 @@ const router = new Router({
       path: '/frontvuebato/profile',
       name: 'Profile',
       component: Profile,
+    },
+    {
+      path: '/frontvuebato/newUser',
+      name: 'NewUser',
+      component: NewUser,
     },
     {
       path: '/frontvuebato/persons',
