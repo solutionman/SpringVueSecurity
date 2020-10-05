@@ -36,7 +36,8 @@ create table persons
     familyname varchar(255),
     firstname varchar(255),
     middlename varchar(255),
-    birthday date
+    birthday date,
+    email varchar(255)
 );
 
 create unique index persons_id_uindex
@@ -54,7 +55,7 @@ INSERT INTO roles VALUES ( 4, 'ROLE_PERFORMER' );
 
 INSERT INTO users VALUES (1,'admin','$2a$11$vwr8793lnCpvfD5T6/K16e0PXvTXGa0xE37Uez7WQJWoT4Wg5FN6K'); --12345678
 INSERT INTO user_roles values (1,2);
-INSERT INTO persons VALUES (1, 1,'some family name', 'some first name', 'some middle name', '1997-06-12');
+INSERT INTO persons VALUES (1, 1,'some family name', 'some first name', 'some middle name', '1997-06-12', 'fakemail@gmail.com');
 
 
 
