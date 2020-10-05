@@ -15,6 +15,7 @@ run without tomcat:
 mvn spring-boot:run
 npm run serve
 
+localhost:8081/frontvuebato/
 
 run with tomcat:
 
@@ -36,3 +37,5 @@ tomcatFront/conf/server.xml
            redirectPort="8444" />
 
 WEB-INF with file web.xml to ROOT and front
+
+localhost:8081/frontvuebato/
