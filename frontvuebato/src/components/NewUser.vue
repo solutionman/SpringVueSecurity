@@ -22,7 +22,7 @@
                                 label="Username"
                                 required
                             ></v-text-field>
-                          </ValidationProvider><ValidationProvider v-slot="{ errors }" name="Password" rules="required|min:1|max:30">
+                          </ValidationProvider><ValidationProvider v-slot="{ errors }" name="Password" rules="required|min:8|max:30">
                           <v-text-field
                               v-model="password"
                               :counter="30"
@@ -30,7 +30,7 @@
                               label="Password"
                               required
                           ></v-text-field>
-                        </ValidationProvider><ValidationProvider v-slot="{ errors }" name="Confirm Password" rules="required|min:1|max:30">
+                        </ValidationProvider><ValidationProvider v-slot="{ errors }" name="Confirm Password" rules="required|min:8|max:30">
                           <v-text-field
                               v-model="confirm_password"
                               :counter="30"
