@@ -8,18 +8,43 @@
                     pa-2
             >
                 <v-card-title>
-                    Редактирование профиля
+                    Add new user.
                     <v-spacer></v-spacer>
                 </v-card-title>
 
                 <ValidationObserver ref="observer" v-slot="{ validate, reset }">
                     <form>
+                          <ValidationProvider v-slot="{ errors }" name="Username" rules="required|min:3|max:30">
+                            <v-text-field
+                                v-model="username"
+                                :counter="30"
+                                :error-messages="errors"
+                                label="Username"
+                                required
+                            ></v-text-field>
+                          </ValidationProvider><ValidationProvider v-slot="{ errors }" name="Password" rules="required|min:1|max:30">
+                          <v-text-field
+                              v-model="password"
+                              :counter="30"
+                              :error-messages="errors"
+                              label="Password"
+                              required
+                          ></v-text-field>
+                        </ValidationProvider><ValidationProvider v-slot="{ errors }" name="Confirm Password" rules="required|min:1|max:30">
+                          <v-text-field
+                              v-model="confirm_password"
+                              :counter="30"
+                              :error-messages="errors"
+                              label="Confirm password"
+                              required
+                          ></v-text-field>
+                        </ValidationProvider>
                         <ValidationProvider v-slot="{ errors }" name="Имя" rules="required|min:1|max:30">
                             <v-text-field
                                     v-model="first_name"
                                     :counter="30"
                                     :error-messages="errors"
-                                    label="Имя"
+                                    label="First name"
                                     required
                             ></v-text-field>
                         </ValidationProvider>
@@ -28,7 +53,7 @@
                                     v-model="second_name"
                                     :counter="30"
                                     :error-messages="errors"
-                                    label="Фамилия"
+                                    label="Second name"
                                     required
                             ></v-text-field>
                         </ValidationProvider>
@@ -37,7 +62,7 @@
                             v-model="middle_name"
                             :counter="30"
                             :error-messages="errors"
-                            label="Отчество"
+                            label="Middle name"
                             required
                         ></v-text-field>
                       </ValidationProvider>
@@ -110,6 +135,9 @@
         },
         data () {
             return {
+                username: '',
+                password: '',
+                confirm_password: '',
                 first_name: '',
                 second_name: '',
                 middle_name: '',
