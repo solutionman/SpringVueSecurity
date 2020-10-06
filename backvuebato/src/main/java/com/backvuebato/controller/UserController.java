@@ -1,8 +1,10 @@
 package com.backvuebato.controller;
 
 import com.backvuebato.entity.Persons;
+import com.backvuebato.entity.Roles;
 import com.backvuebato.entity.Users;
 import com.backvuebato.repository.PersonRepository;
+import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,10 +21,12 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
+    private final RolesRepository rolesRepository;
 
-    public UserController(UserRepository userRepository, PersonRepository personRepository) {
+    public UserController(UserRepository userRepository, PersonRepository personRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
         this.personRepository = personRepository;
+        this.rolesRepository = rolesRepository;
     }
 
     @PostMapping(value = "profile")
@@ -68,5 +73,13 @@ public class UserController {
 
         Map<String, Object> newUser = new HashMap<>();
         return newUser;
+    }
+
+    @PostMapping(value = "roles")
+    public Map<String, Object> roles(){
+        List<Roles> rolesList = rolesRepository.findAll();
+        Map<String, Object> rolesMap = new HashMap<>();
+        rolesMap.put("roles", rolesList);
+        return rolesMap;
     }
 }
