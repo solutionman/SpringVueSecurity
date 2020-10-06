@@ -62,4 +62,11 @@ public class UserController {
 
         return profile;
     }
+
+    @PostMapping(value = "newuser")
+    public Map<String, Object> newUser(@RequestBody Map<String, Object> formValues){
+
+        Map<String, Object> newUser = new HashMap<>();
+        return newUser;
+    }
 }

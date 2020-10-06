@@ -84,8 +84,8 @@
                             ></v-text-field>
                         </ValidationProvider>
 
-                        <v-btn class="mr-4" @click="submit">Применить</v-btn>
-                        <v-btn @click="clear">Отмена</v-btn>
+                        <v-btn class="mr-4" @click="submit">Create</v-btn>
+                        <v-btn @click="clear">Clear</v-btn>
                     </form>
                 </ValidationObserver>
 
@@ -148,19 +148,19 @@
             }
         },
         mounted () {
-            this.$axios({
-                method: 'post',
-                url: 'http://localhost:8080/backvuebato/profile',
-            }).then(response =>{
-                // console.log( response );
-                this.first_name = response.data.first_name;
-                this.second_name = response.data.second_name;
-                this.middle_name = response.data.middle_name;
-                this.birthday = response.data.birthday == null ? 'Нет даты' : this.$moment(response.data.birthday).locale('ru').format('DD MMMM YYYY');
-                this.email = response.data.email;
-            }).catch((error) => {
-                console.log(error);
-            })
+            // this.$axios({
+            //     method: 'post',
+            //     url: 'http://localhost:8080/backvuebato/newuser',
+            // }).then(response =>{
+            //     // console.log( response );
+            //     this.first_name = response.data.first_name;
+            //     this.second_name = response.data.second_name;
+            //     this.middle_name = response.data.middle_name;
+            //     this.birthday = response.data.birthday == null ? 'Нет даты' : this.$moment(response.data.birthday).locale('ru').format('DD MMMM YYYY');
+            //     this.email = response.data.email;
+            // }).catch((error) => {
+            //     console.log(error);
+            // })
         },
         methods: {
             async submit() {
@@ -174,36 +174,41 @@
                     formValues["email"] = this.email;
                     this.$axios({
                         method: 'post',
-                        url: 'http://localhost:8080/backvuebato/edit_profile',
+                        url: 'http://localhost:8080/backvuebato/newuser',
                         // headers: {},
                         data: formValues
                     }).then(response => {
-                        // console.log(response);
-                        this.first_name = response.data.first_name;
-                        this.second_name = response.data.second_name;
-                        this.middle_name = response.data.middle_name;
-                        this.birthday = response.data.birthday;
-                        this.email = response.data.email;
+                        console.log(response);
+                        // this.first_name = response.data.first_name;
+                        // this.second_name = response.data.second_name;
+                        // this.middle_name = response.data.middle_name;
+                        // this.birthday = response.data.birthday;
+                        // this.email = response.data.email;
                     }).catch((error) => {
                         console.log(error);
                     })
                 }
             },
             clear () {
-                this.$axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/backvuebato/profile'
-                }).then(response =>{
-                    // console.log( response );
-                    this.first_name = response.data.first_name;
-                    this.second_name = response.data.second_name;
-                    this.middle_name = response.data.middle_name;
-                    this.birthday = response.data.birthday;
-                    this.email = response.data.email;
-                }).catch((error) => {
-                    console.log(error);
-                })
-                this.$refs.observer.reset()
+              this.first_name = '';
+              this.second_name = '';
+              this.middle_name = '';
+              this.birthday = '';
+              this.email = '';
+                // this.$axios({
+                //     method: 'post',
+                //     url: 'http://localhost:8080/backvuebato/profile'
+                // }).then(response =>{
+                //     // console.log( response );
+                //     this.first_name = response.data.first_name;
+                //     this.second_name = response.data.second_name;
+                //     this.middle_name = response.data.middle_name;
+                //     this.birthday = response.data.birthday;
+                //     this.email = response.data.email;
+                // }).catch((error) => {
+                //     console.log(error);
+                // })
+                // this.$refs.observer.reset()
             },
         },
     }
