@@ -168,9 +168,12 @@
                 // console.log(isValid);
                 if (isValid) {
                     let formValues = {};
+                    formValues["username"] = this.username;
+                    formValues["password"] = this.password;
                     formValues["first_name"] = this.first_name;
                     formValues["second_name"] = this.second_name;
                     formValues["middle_name"] = this.middle_name;
+                    formValues["birthday"] = this.birthday;
                     formValues["email"] = this.email;
                     this.$axios({
                         method: 'post',
@@ -190,6 +193,9 @@
                 }
             },
             clear () {
+              this.username = '';
+              this.password = '';
+              this.confirm_password = '';
               this.first_name = '';
               this.second_name = '';
               this.middle_name = '';
