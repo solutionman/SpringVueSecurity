@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,8 +79,12 @@ public class UserController {
     @PostMapping(value = "roles")
     public Map<String, Object> roles(){
         List<Roles> rolesList = rolesRepository.findAll();
+        List<String> roles = new ArrayList<>();
+        for(Roles role : rolesList){
+            roles.add(role.getName());
+        }
         Map<String, Object> rolesMap = new HashMap<>();
-        rolesMap.put("roles", rolesList);
+        rolesMap.put("roles", roles);
         return rolesMap;
     }
 }
