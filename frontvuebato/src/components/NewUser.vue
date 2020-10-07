@@ -46,7 +46,7 @@
                               v-model="e6"
                               :items="roles"
                               :menu-props="{ maxHeight: '400' }"
-                              label="Select"
+                              label="Roles"
                               multiple
                               hint="Choose roles"
                               persistent-hint
