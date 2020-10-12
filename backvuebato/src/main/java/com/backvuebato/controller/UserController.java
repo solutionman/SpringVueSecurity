@@ -6,6 +6,8 @@ import com.backvuebato.entity.Users;
 import com.backvuebato.repository.PersonRepository;
 import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -77,8 +79,13 @@ public class UserController {
         Users user = new Users();
         user.setUsername( formValues.get("username").toString() );
         user.setPassword( bCryptPasswordEncoder.encode( formValues.get("password").toString() ) );
-
-        Roles userRoles = rolesRepository.findByName( "USER" );
+        List<String> roles = (List<String>) formValues.get("roles");
+        Set<Roles> rolesToSet = new HashSet<>();
+        for(String role : roles){
+            Roles roleToAdd = rolesRepository.findByName(role);
+            rolesToSet.add(roleToAdd);
+        }
+        user.setRoles(rolesToSet);
         Persons person = new Persons();
 
 
