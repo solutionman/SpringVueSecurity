@@ -6,8 +6,10 @@ import com.backvuebato.entity.Users;
 import com.backvuebato.repository.PersonRepository;
 import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,6 +31,9 @@ public class UserController {
         this.personRepository = personRepository;
         this.rolesRepository = rolesRepository;
     }
+
+    @Autowired
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(value = "profile")
     public Map<String, Object> profile(){
@@ -71,6 +76,12 @@ public class UserController {
 
     @PostMapping(value = "newuser")
     public Map<String, Object> newUser(@RequestBody Map<String, Object> formValues){
+
+        Users user = new Users();
+        user.setUsername( formValues.get("username").toString() );
+        user.setPassword( bCryptPasswordEncoder.encode( formValues.get("password").toString() ) );
+        Persons person = new Persons();
+
 
         Map<String, Object> newUser = new HashMap<>();
         return newUser;
