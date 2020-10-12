@@ -86,8 +86,15 @@ public class UserController {
             rolesToSet.add(roleToAdd);
         }
         user.setRoles(rolesToSet);
+        userRepository.save( user );
         Persons person = new Persons();
-
+        person.setUserid( userRepository.findByUsername(user.getUsername()).getId() );
+        person.setFirstname( formValues.get("first_name").toString() );
+        person.setFamilyname( formValues.get("second_name").toString() );
+        person.setMiddlename( formValues.get("middle_name").toString() );
+        // TODO setBirthday
+        person.setEmail( formValues.get("email").toString() );
+        personRepository.save(person);
 
         Map<String, Object> newUser = new HashMap<>();
         return newUser;
