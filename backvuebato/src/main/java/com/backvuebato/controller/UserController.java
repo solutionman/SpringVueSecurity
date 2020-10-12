@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -80,6 +77,8 @@ public class UserController {
         Users user = new Users();
         user.setUsername( formValues.get("username").toString() );
         user.setPassword( bCryptPasswordEncoder.encode( formValues.get("password").toString() ) );
+
+        Roles userRoles = rolesRepository.findByName( "USER" );
         Persons person = new Persons();
 
 

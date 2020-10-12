@@ -43,7 +43,7 @@
                         </ValidationProvider>
                         <ValidationProvider v-slot="{ errors }" name="Роль" rules="required|min:1|max:30">
                           <v-select
-                              v-model="e6"
+                              v-model="selectedRoles"
                               :items="roles"
                               :menu-props="{ maxHeight: '400' }"
                               label="Roles"
@@ -117,10 +117,10 @@
 </template>
 
 <script>
-    import { required, email, max, min } from 'vee-validate/dist/rules'
-    import { extend, ValidationObserver, ValidationProvider, setInteractionMode } from 'vee-validate'
+import {email, max, min, required} from 'vee-validate/dist/rules'
+import {extend, setInteractionMode, ValidationObserver, ValidationProvider} from 'vee-validate'
 
-    setInteractionMode('eager')
+setInteractionMode('eager')
 
     extend('required', {
         ...required,
@@ -159,7 +159,7 @@
                 email: '',
                 select: null,
                 // roles: ['user','admin'],
-                e6: [],
+                selectedRoles: [],
             }
         },
         mounted () {
@@ -186,6 +186,7 @@
                     formValues["middle_name"] = this.middle_name;
                     formValues["birthday"] = this.birthday;
                     formValues["email"] = this.email;
+                    formValues["roles"] = this.selectedRoles;
                     this.$axios({
                         method: 'post',
                         url: 'http://localhost:8080/backvuebato/newuser',
