@@ -75,7 +75,11 @@ public class UserController {
 
     @PostMapping(value = "newuser")
     public Map<String, Object> newUser(@RequestBody Map<String, Object> formValues){
-
+        if( null != userRepository.findByUsername( formValues.get("username").toString() ) ){
+            Map<String, Object> errorResult = new HashMap<>();
+            errorResult.put("error", "user already exist");
+            return errorResult;
+        }
         Users user = new Users();
         user.setUsername( formValues.get("username").toString() );
         user.setPassword( bCryptPasswordEncoder.encode( formValues.get("password").toString() ) );
