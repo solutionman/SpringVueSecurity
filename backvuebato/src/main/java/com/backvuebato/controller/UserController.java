@@ -61,6 +61,7 @@ public class UserController {
         person.setFirstname( formValues.get("first_name").toString() );
         person.setFamilyname( formValues.get("second_name").toString() );
         person.setMiddlename( formValues.get("middle_name").toString() );
+        person.setEmail( formValues.get("email").toString() );
         personRepository.save( person );
 
         Map<String, Object> profile = new HashMap<>();
