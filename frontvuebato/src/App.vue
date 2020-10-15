@@ -101,6 +101,7 @@ export default {
           { title: 'В начало', path: '/frontvuebato/home', icon: 'mdi-home-city' },
           { title: 'Мой профиль', path: '/frontvuebato/profile', icon: 'mdi-account' },
           { title: 'Пользователи системы', path: '/frontvuebato/persons', icon: 'mdi-account-group-outline' },
+          { title: 'Yandex Maps', path: '/frontvuebato/maps', icon: 'mdi-google-maps' },
         ]
     },
     menuItems() {

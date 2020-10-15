@@ -6,6 +6,7 @@ import SignIn from '../components/SignIn.vue';
 import Profile from "@/components/Profile";
 import Persons from "@/components/Persons";
 import NewUser from "@/components/NewUser";
+import Maps from "@/components/Maps";
 
 
 Vue.use(Router);
@@ -27,6 +28,11 @@ const router = new Router({
       path: '/frontvuebato/profile',
       name: 'Profile',
       component: Profile,
+    },
+    {
+      path: '/frontvuebato/maps',
+      name: 'Maps',
+      component: Maps,
     },
     {
       path: '/frontvuebato/newUser',
