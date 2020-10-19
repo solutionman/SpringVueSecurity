@@ -119,6 +119,7 @@
 <script>
 import {email, max, min, required} from 'vee-validate/dist/rules'
 import {extend, setInteractionMode, ValidationObserver, ValidationProvider} from 'vee-validate'
+import router from "@/router";
 
 setInteractionMode('eager')
 
@@ -194,6 +195,7 @@ setInteractionMode('eager')
                         data: formValues
                     }).then(response => {
                         console.log(response);
+                        router.push({ name: 'Persons' });
                         // this.first_name = response.data.first_name;
                         // this.second_name = response.data.second_name;
                         // this.middle_name = response.data.middle_name;
