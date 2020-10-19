@@ -94,14 +94,17 @@ public class UserController {
         userRepository.save( user );
         Persons person = new Persons();
         person.setUserid( userRepository.findByUsername(user.getUsername()).getId() );
-        person.setFirstname( formValues.get("first_name").toString() );
-        person.setFamilyname( formValues.get("second_name").toString() );
-        person.setMiddlename( formValues.get("middle_name").toString() );
-        // TODO setBirthday
+        person.setFirstname( null != formValues.get("first_name") ? formValues.get("first_name").toString() : "" );
+        person.setFamilyname( null != formValues.get("second_name") ? formValues.get("second_name").toString() : "" );
+        person.setMiddlename( null != formValues.get("middle_name") ? formValues.get("middle_name").toString() : "" );
         String formBirthDate = formValues.get("birthday").toString();
-        java.sql.Date birthDate = java.sql.Date.valueOf(formBirthDate);
-        person.setBirthday( birthDate );
-        person.setEmail( formValues.get("email").toString() );
+        try {
+            java.sql.Date birthDate = java.sql.Date.valueOf(formBirthDate);
+            person.setBirthday( birthDate );
+        } catch (Exception ex){
+            java.lang.System.out.println( "Exception in date parsing: " + ex.getLocalizedMessage() );
+        }
+        person.setEmail( null != formValues.get("email") ? formValues.get("email").toString() : "" );
         personRepository.save(person);
 
         Map<String, Object> newUser = new HashMap<>();
