@@ -98,6 +98,9 @@ public class UserController {
         person.setFamilyname( formValues.get("second_name").toString() );
         person.setMiddlename( formValues.get("middle_name").toString() );
         // TODO setBirthday
+        String formBirthDate = formValues.get("birthday").toString();
+        java.sql.Date birthDate = java.sql.Date.valueOf(formBirthDate);
+        person.setBirthday( birthDate );
         person.setEmail( formValues.get("email").toString() );
         personRepository.save(person);
 
