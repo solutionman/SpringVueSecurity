@@ -41,3 +41,19 @@ tomcatFront/conf/server.xml
 WEB-INF with file web.xml to ROOT and front
 
 localhost:8081/frontvuebato/
+
+
+for remote debug backvuebato on tomcat
+run 
+./catalina.sh jpda start
+
+in Idea
+Edit configuration
++
+Remote JVM Debug
+
+Name: Tomcat
+Port: 8000     (by default tomcat listen 8000 port)
+Host: localhost
+
+
