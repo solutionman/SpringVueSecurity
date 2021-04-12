@@ -6,6 +6,7 @@ import com.backvuebato.entity.Users;
 import com.backvuebato.repository.PersonRepository;
 import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
+import com.backvuebato.utils.DateParseUtils;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.Date;
 import java.util.*;
 
 @RestController
@@ -24,6 +26,7 @@ public class UserController {
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
     private final RolesRepository rolesRepository;
+    DateParseUtils dateParseUtils = new DateParseUtils();
 
     public UserController(UserRepository userRepository, PersonRepository personRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
@@ -35,7 +38,7 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @PostMapping(value = "profile")
-    public Map<String, Object> profile(){
+    public Map<String, Object> profile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         Users user = userRepository.findByUsername(name);
@@ -52,24 +55,24 @@ public class UserController {
     }
 
     @PostMapping(value = "edit_profile")
-    public Map<String, Object> editProfile(@RequestBody Map<String, Object> formValues){
+    public Map<String, Object> editProfile(@RequestBody Map<String, Object> formValues) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         Users user = userRepository.findByUsername(name);
-        Persons person = personRepository.findByUserid( user.getId() );
+        Persons person = personRepository.findByUserid(user.getId());
 
-        person.setFirstname( formValues.get("first_name").toString() );
-        person.setFamilyname( formValues.get("second_name").toString() );
-        person.setMiddlename( formValues.get("middle_name").toString() );
-        person.setEmail( formValues.get("email").toString() );
-        if(formValues.get("birthday") != null){
-            try {
-                person.setBirthday(java.sql.Date.valueOf(formValues.get("birthday").toString()));
-            } catch (Exception e){
-                System.out.println("Error in date parsing" + e.getMessage() );
+        person.setFirstname(formValues.get("first_name").toString());
+        person.setFamilyname(formValues.get("second_name").toString());
+        person.setMiddlename(formValues.get("middle_name").toString());
+        person.setEmail(formValues.get("email").toString());
+        if (formValues.get("birthday") != null) {
+            String birthday = formValues.get("birthday").toString();
+            Date sqlBirthday = dateParseUtils.stringToSqlDate(birthday);
+            if (sqlBirthday != null) {
+                person.setBirthday(sqlBirthday);
             }
         }
-        personRepository.save( person );
+        personRepository.save(person);
 
         Map<String, Object> profile = new HashMap<>();
         profile.put("first_name", person.getFirstname());
@@ -82,36 +85,36 @@ public class UserController {
     }
 
     @PostMapping(value = "newuser")
-    public Map<String, Object> newUser(@RequestBody Map<String, Object> formValues){
-        if( null != userRepository.findByUsername( formValues.get("username").toString() ) ){
+    public Map<String, Object> newUser(@RequestBody Map<String, Object> formValues) {
+        if (null != userRepository.findByUsername(formValues.get("username").toString())) {
             Map<String, Object> errorResult = new HashMap<>();
             errorResult.put("error", "user already exist");
             return errorResult;
         }
         Users user = new Users();
-        user.setUsername( formValues.get("username").toString() );
-        user.setPassword( bCryptPasswordEncoder.encode( formValues.get("password").toString() ) );
+        user.setUsername(formValues.get("username").toString());
+        user.setPassword(bCryptPasswordEncoder.encode(formValues.get("password").toString()));
         List<String> roles = (List<String>) formValues.get("roles");
         Set<Roles> rolesToSet = new HashSet<>();
-        for(String role : roles){
+        for (String role : roles) {
             Roles roleToAdd = rolesRepository.findByName(role);
             rolesToSet.add(roleToAdd);
         }
         user.setRoles(rolesToSet);
-        userRepository.save( user );
+        userRepository.save(user);
         Persons person = new Persons();
-        person.setUserid( userRepository.findByUsername(user.getUsername()).getId() );
-        person.setFirstname( null != formValues.get("first_name") ? formValues.get("first_name").toString() : "" );
-        person.setFamilyname( null != formValues.get("second_name") ? formValues.get("second_name").toString() : "" );
-        person.setMiddlename( null != formValues.get("middle_name") ? formValues.get("middle_name").toString() : "" );
+        person.setUserid(userRepository.findByUsername(user.getUsername()).getId());
+        person.setFirstname(null != formValues.get("first_name") ? formValues.get("first_name").toString() : "");
+        person.setFamilyname(null != formValues.get("second_name") ? formValues.get("second_name").toString() : "");
+        person.setMiddlename(null != formValues.get("middle_name") ? formValues.get("middle_name").toString() : "");
         String formBirthDate = formValues.get("birthday").toString();
         try {
             java.sql.Date birthDate = java.sql.Date.valueOf(formBirthDate);
-            person.setBirthday( birthDate );
-        } catch (Exception ex){
-            java.lang.System.out.println( "Exception in date parsing: " + ex.getLocalizedMessage() );
+            person.setBirthday(birthDate);
+        } catch (Exception ex) {
+            java.lang.System.out.println("Exception in date parsing: " + ex.getLocalizedMessage());
         }
-        person.setEmail( null != formValues.get("email") ? formValues.get("email").toString() : "" );
+        person.setEmail(null != formValues.get("email") ? formValues.get("email").toString() : "");
         personRepository.save(person);
 
         Map<String, Object> newUser = new HashMap<>();
@@ -119,10 +122,10 @@ public class UserController {
     }
 
     @PostMapping(value = "roles")
-    public Map<String, Object> roles(){
+    public Map<String, Object> roles() {
         List<Roles> rolesList = rolesRepository.findAll();
         List<String> roles = new ArrayList<>();
-        for(Roles role : rolesList){
+        for (Roles role : rolesList) {
             roles.add(role.getName());
         }
         Map<String, Object> rolesMap = new HashMap<>();
