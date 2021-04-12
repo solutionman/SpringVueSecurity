@@ -47,7 +47,6 @@
                             :counter="30"
                             :error-messages="errors"
                             label="Дата рождения"
-                            required
                         ></v-text-field>
                       </ValidationProvider>
                         <ValidationProvider v-slot="{ errors }" name="email" rules="required|email">
@@ -144,6 +143,7 @@
                     formValues["second_name"] = this.second_name;
                     formValues["middle_name"] = this.middle_name;
                     formValues["email"] = this.email;
+                    formValues["birthday"] = this.birthday;
                     this.$axios({
                         method: 'post',
                         url: 'http://localhost:8080/backvuebato/edit_profile',

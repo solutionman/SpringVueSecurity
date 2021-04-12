@@ -62,6 +62,13 @@ public class UserController {
         person.setFamilyname( formValues.get("second_name").toString() );
         person.setMiddlename( formValues.get("middle_name").toString() );
         person.setEmail( formValues.get("email").toString() );
+        if(formValues.get("birthday") != null){
+            try {
+                person.setBirthday(java.sql.Date.valueOf(formValues.get("birthday").toString()));
+            } catch (Exception e){
+                System.out.println("Error in date parsing" + e.getMessage() );
+            }
+        }
         personRepository.save( person );
 
         Map<String, Object> profile = new HashMap<>();
