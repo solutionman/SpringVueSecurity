@@ -65,12 +65,9 @@ public class UserController {
         person.setFamilyname(formValues.get("second_name").toString());
         person.setMiddlename(formValues.get("middle_name").toString());
         person.setEmail(formValues.get("email").toString());
-        if (formValues.get("birthday") != null) {
-            String birthday = formValues.get("birthday").toString();
-            Date sqlBirthday = dateParseUtils.stringToSqlDate(birthday);
-            if (sqlBirthday != null) {
-                person.setBirthday(sqlBirthday);
-            }
+        Date sqlBirthday = dateParseUtils.stringToSqlDate(formValues.get("birthday"));
+        if (sqlBirthday != null) {
+            person.setBirthday(sqlBirthday);
         }
         personRepository.save(person);
 
