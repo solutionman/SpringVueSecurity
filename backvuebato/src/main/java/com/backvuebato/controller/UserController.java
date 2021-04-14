@@ -104,13 +104,17 @@ public class UserController {
         person.setFirstname(null != formValues.get("first_name") ? formValues.get("first_name").toString() : "");
         person.setFamilyname(null != formValues.get("second_name") ? formValues.get("second_name").toString() : "");
         person.setMiddlename(null != formValues.get("middle_name") ? formValues.get("middle_name").toString() : "");
-        String formBirthDate = formValues.get("birthday").toString();
-        try {
-            java.sql.Date birthDate = java.sql.Date.valueOf(formBirthDate);
-            person.setBirthday(birthDate);
-        } catch (Exception ex) {
-            java.lang.System.out.println("Exception in date parsing: " + ex.getLocalizedMessage());
+        Date formBirthDate = dateParseUtils.stringToSqlDate(formValues.get("birthday"));
+        if(formBirthDate != null){
+            person.setBirthday(formBirthDate);
         }
+//        String formBirthDate = formValues.get("birthday").toString();
+//        try {
+//            java.sql.Date birthDate = java.sql.Date.valueOf(formBirthDate);
+//            person.setBirthday(birthDate);
+//        } catch (Exception ex) {
+//            java.lang.System.out.println("Exception in date parsing: " + ex.getLocalizedMessage());
+//        }
         person.setEmail(null != formValues.get("email") ? formValues.get("email").toString() : "");
         personRepository.save(person);
 
