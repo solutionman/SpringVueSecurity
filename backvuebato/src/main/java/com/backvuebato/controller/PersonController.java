@@ -70,7 +70,8 @@ public class PersonController {
             currentPerson.put("firstname", person.getFirstname());
             currentPerson.put("middlename", person.getMiddlename());
             currentPerson.put("birthday", person.getBirthday());
-            currentPerson.put("additionalData", "some data to show about this person");
+            currentPerson.put("additionalData", "some data to show about this person, for example email: "
+                    + (person.getEmail() == null ? "" : person.getEmail()));
             personsToDisplay.add(currentPerson);
         }
         long totalPersons = page.getTotalElements();

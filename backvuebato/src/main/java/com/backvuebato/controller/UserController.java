@@ -108,13 +108,6 @@ public class UserController {
         if(formBirthDate != null){
             person.setBirthday(formBirthDate);
         }
-//        String formBirthDate = formValues.get("birthday").toString();
-//        try {
-//            java.sql.Date birthDate = java.sql.Date.valueOf(formBirthDate);
-//            person.setBirthday(birthDate);
-//        } catch (Exception ex) {
-//            java.lang.System.out.println("Exception in date parsing: " + ex.getLocalizedMessage());
-//        }
         person.setEmail(null != formValues.get("email") ? formValues.get("email").toString() : "");
         personRepository.save(person);
 

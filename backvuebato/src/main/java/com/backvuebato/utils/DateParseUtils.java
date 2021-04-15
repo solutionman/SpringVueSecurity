@@ -18,9 +18,8 @@ public class DateParseUtils {
 
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("ru"));
             LocalDate localDate = LocalDate.parse(dateToString, formatter);
-            Date result = java.sql.Date.valueOf(localDate);
+            return java.sql.Date.valueOf(localDate);
 
-            return result;
         } catch (Exception e){
             return null;
         }
