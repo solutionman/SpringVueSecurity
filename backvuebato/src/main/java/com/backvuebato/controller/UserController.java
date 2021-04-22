@@ -105,7 +105,7 @@ public class UserController {
         person.setFamilyname(null != formValues.get("second_name") ? formValues.get("second_name").toString() : "");
         person.setMiddlename(null != formValues.get("middle_name") ? formValues.get("middle_name").toString() : "");
         Date formBirthDate = dateParseUtils.stringToSqlDate(formValues.get("birthday"));
-        if(formBirthDate != null){
+        if (formBirthDate != null) {
             person.setBirthday(formBirthDate);
         }
         person.setEmail(null != formValues.get("email") ? formValues.get("email").toString() : "");
