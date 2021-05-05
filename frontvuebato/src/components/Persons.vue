@@ -1,6 +1,7 @@
 <template>
   <v-card>
   <v-data-table
+      v-model="selected"
       :headers="personsHeaders"
       :items="persons"
       :options.sync="options"
@@ -9,8 +10,10 @@
       :loading="loading"
       :single-expand="singleExpand"
       :expanded.sync="expanded"
+      :single-select="singleSelect"
       item-key="name"
       show-expand
+      show-select
       class="elevation-1"
       :items-per-page="10"
       :footer-props="footerProps"
@@ -27,6 +30,11 @@
             v-model="singleExpand"
             label="Single expand"
             class="mt-2"
+        ></v-switch>
+        <v-switch
+            v-model="singleSelect"
+            label="Single select"
+            class="pa-3"
         ></v-switch>
       </v-toolbar>
       <v-text-field
@@ -53,7 +61,7 @@ export default {
   data () {
     return {
       expanded: [],
-      singleExpand: false,
+      singleExpand: true,
       personsHeaders: [
         {
           text: 'Пользователь',
@@ -71,6 +79,8 @@ export default {
       loading: true,
       sortBy: 'id',
       persons: [],
+      selected: [],
+      singleSelect: true,
       options: {},
       search: '',
       footerProps: {'items-per-page-options': [5, 10, 15, 30, 50, 100]},
