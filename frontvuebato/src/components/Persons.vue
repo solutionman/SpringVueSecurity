@@ -163,7 +163,7 @@ export default {
       console.log(options);
       this.$axios({
         method: 'post',
-        url: 'http://localhost:8080/backvuebato/persons',
+        url: 'http://localhost:8080/backvuebato/delete',
         data: options
       }).then(response =>{
         console.log(response);
