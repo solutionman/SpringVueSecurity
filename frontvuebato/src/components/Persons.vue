@@ -25,13 +25,13 @@
         <v-btn
             color="#74C2F2"
             @click="addNewUser" >
-          Добавить пользователя
+          Добавить
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn
             color="#F7C5C5"
             @click="deleteUser" >
-          Удалить пользователя
+          Удалить
         </v-btn>
         <v-spacer></v-spacer>
         <v-switch

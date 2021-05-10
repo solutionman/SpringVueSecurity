@@ -7,8 +7,7 @@ import com.backvuebato.repository.PersonRepository;
 import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
 import com.backvuebato.utils.DateParseUtils;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import net.minidev.json.JSONObject;
+import net.minidev.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -23,6 +22,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.util.*;
+
+import static java.lang.Integer.parseInt;
 
 @RestController
 public class UserController {
@@ -133,10 +134,20 @@ public class UserController {
 
     @PostMapping(value = "delete")
     public Map<String, Object> deletePersons(@RequestBody Map<String, Object> data) {
-        // TODO delete selected
-        String selected = data.get("selected").toString();
+
+        List<Object> list = (List<Object>) data.get("selected");
+        try {
+            for (Object obj : list) {
+                Map<String, Object> val = (Map<String, Object>) obj;
+                Integer id = (Integer) val.get("id");
+                personRepository.deleteById(id);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+
         String sortDesc = data.get("sortDesc").toString();
-        int itemsPerPage = Integer.parseInt(data.get("itemsPerPage").toString());
+        int itemsPerPage = parseInt(data.get("itemsPerPage").toString());
         String orderBy = data.get("sortBy").toString();
         String forPageable;
         switch (orderBy) {
@@ -155,7 +166,7 @@ public class UserController {
             default:
                 forPageable = "id";
         }
-        int currPage = Integer.parseInt(data.get("page").toString()) - 1;
+        int currPage = parseInt(data.get("page").toString()) - 1;
         Pageable pageable = PageRequest.of(currPage, itemsPerPage, Sort.by(sortDesc.equals("[true]") ? Sort.Direction.DESC : Sort.Direction.ASC, forPageable));
         Page<Persons> page;
         String search = null == data.get("search") ? "" : data.get("search").toString();
