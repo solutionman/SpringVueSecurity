@@ -135,8 +135,8 @@ public class UserController {
     @PostMapping(value = "delete")
     public Map<String, Object> deletePersons(@RequestBody Map<String, Object> data) {
 
-        List<Object> list = (List<Object>) data.get("selected");
         try {
+            List<Object> list = (List<Object>) data.get("selected");
             for (Object obj : list) {
                 Map<String, Object> val = (Map<String, Object>) obj;
                 Integer id = (Integer) val.get("id");
