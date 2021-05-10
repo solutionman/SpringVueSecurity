@@ -141,6 +141,8 @@ public class UserController {
                 Map<String, Object> val = (Map<String, Object>) obj;
                 Integer id = (Integer) val.get("id");
                 personRepository.deleteById(id);
+                Users user = userRepository.findByUsername(val.get("name").toString());
+                userRepository.deleteById(user.getId());
             }
         } catch (Exception e){
             e.printStackTrace();
