@@ -29,7 +29,7 @@
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn
-            color="#74C2F2"
+            color="#A3E4D7"
             @click="editUser" >
           Редактировать
         </v-btn>
