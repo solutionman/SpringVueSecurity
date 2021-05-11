@@ -23,10 +23,15 @@ run with tomcat:
 mvn clean install
 backvuebato.war to tomcat (webapps)
 
+
+for another tomcat, which runs on port 8081
+
+in webapps create new folder frontvuebato
+add WEB-INF from filesForTomcat to frontvuebato
+
 npm install
 npm run build
 copy from dist to frontvuebato
-in another tomcat, which runs on port 8081
 
 to config tomcat:
 
@@ -41,6 +46,7 @@ tomcatFront/conf/server.xml
 WEB-INF with file web.xml to ROOT and front
 
 localhost:8081/frontvuebato/
+
 
 
 for remote debug backvuebato on tomcat
