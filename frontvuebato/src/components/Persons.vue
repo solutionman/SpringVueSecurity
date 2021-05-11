@@ -29,6 +29,12 @@
         </v-btn>
         <v-spacer></v-spacer>
         <v-btn
+            color="#74C2F2"
+            @click="editUser" >
+          Редактировать
+        </v-btn>
+        <v-spacer></v-spacer>
+        <v-btn
             color="#F7C5C5"
             @click="deleteUser" >
           Удалить
@@ -148,6 +154,10 @@ export default {
     addNewUser (){
       console.log("add user");
       router.push({ name: 'NewUser' });
+    },
+    editUser (){
+      console.log("edit user");
+      // router.push({ name: 'NewUser' });
     },
     deleteUser (){
       console.log("delete user");
