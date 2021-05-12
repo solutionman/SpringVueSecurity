@@ -7,6 +7,7 @@ import Profile from "@/components/Profile";
 import Persons from "@/components/Persons";
 import NewUser from "@/components/NewUser";
 import Maps from "@/components/Maps";
+import EditUser from "../components/EditUser";
 
 
 Vue.use(Router);
@@ -38,6 +39,11 @@ const router = new Router({
       path: '/frontvuebato/newUser',
       name: 'NewUser',
       component: NewUser,
+    },
+    {
+      path: '/frontvuebato/editUser/:id',
+      name: 'EditUser',
+      component: EditUser,
     },
     {
       path: '/frontvuebato/persons',

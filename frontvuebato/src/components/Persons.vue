@@ -157,7 +157,13 @@ export default {
     },
     editUser (){
       console.log("edit user");
-      // router.push({ name: 'NewUser' });
+      console.log(this.selected[0])
+      let person = this.selected[0];
+      console.log(person["id"]);
+      let id = person["id"];
+      if(id != null){
+        router.push({ name: 'EditUser', params: {id} });
+      }
     },
     deleteUser (){
       console.log("delete user");
