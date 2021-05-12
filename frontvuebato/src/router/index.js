@@ -41,7 +41,7 @@ const router = new Router({
       component: NewUser,
     },
     {
-      path: '/frontvuebato/editUser/:id',
+      path: '/frontvuebato/editUser',
       name: 'EditUser',
       component: EditUser,
     },

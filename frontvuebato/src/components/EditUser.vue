@@ -164,9 +164,12 @@ setInteractionMode('eager')
             }
         },
         mounted () {
+          console.log(this.$route.params);
+          let person = this.$route.params;
             this.$axios({
                 method: 'post',
-                url: 'http://localhost:8080/backvuebato/roles',
+                url: 'http://localhost:8080/backvuebato/editUser',
+                data: person
             }).then(response =>{
                 console.log( response );
                 this.roles = response.data.roles;

@@ -18,6 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
@@ -84,6 +85,32 @@ public class UserController {
         profile.put("email", person.getEmail());
 
         return profile;
+    }
+
+    @PostMapping(value = "editUser")
+    public Map<String, Object> editUser(@RequestBody Map<String, Object> userToEdit) {
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Users user = userRepository.findByUsername(name);
+        Persons person = personRepository.findByUserid(user.getId());
+        Map<String, Object> profile = new HashMap<>();
+        profile.put("first_name", person.getFirstname());
+        profile.put("second_name", person.getFamilyname());
+        profile.put("middle_name", person.getMiddlename());
+        profile.put("birthday", person.getBirthday());
+        profile.put("email", person.getEmail());
+        profile.put("username", user.getUsername());
+
+//        return profile;
+        List<Roles> rolesList = rolesRepository.findAll();
+        List<String> roles = new ArrayList<>();
+        for (Roles role : rolesList) {
+            roles.add(role.getName());
+        }
+        Map<String, Object> rolesMap = new HashMap<>();
+        rolesMap.put("roles", roles);
+        return rolesMap;
     }
 
     @PostMapping(value = "newuser")

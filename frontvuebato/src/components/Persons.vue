@@ -162,7 +162,7 @@ export default {
       console.log(person["id"]);
       let id = person["id"];
       if(id != null){
-        router.push({ name: 'EditUser', params: {id} });
+        router.push({ name: 'EditUser', params: {person} });
       }
     },
     deleteUser (){
