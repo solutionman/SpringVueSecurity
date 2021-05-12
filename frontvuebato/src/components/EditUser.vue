@@ -164,6 +164,7 @@ setInteractionMode('eager')
             }
         },
         mounted () {
+          // TODO reload page removes params
           console.log(this.$route.params);
           let person = this.$route.params;
             this.$axios({

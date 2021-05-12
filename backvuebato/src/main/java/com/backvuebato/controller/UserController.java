@@ -89,7 +89,17 @@ public class UserController {
 
     @PostMapping(value = "editUser")
     public Map<String, Object> editUser(@RequestBody Map<String, Object> userToEdit) {
+        // TODO solve problem with losing parameter on reloading page (seems like I have to add userID to url)
+        if(!userToEdit.isEmpty()){
+            Object person = userToEdit.get("person");
+            try {
+                Map<String, Object> p = (Map<String, Object>) person;
+                int id = (int) p.get("id");
+                String debug = "";
+            } catch (Exception e){
 
+            }
+        }
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         Users user = userRepository.findByUsername(name);
