@@ -91,26 +91,36 @@ public class UserController {
     public Map<String, Object> editUser(@RequestBody Map<String, Object> userToEdit) {
         // TODO solve problem with losing parameter on reloading page (seems like I have to add userID to url)
         if(!userToEdit.isEmpty()){
-            Object person = userToEdit.get("person");
+            Object pers = userToEdit.get("person");
             try {
-                Map<String, Object> p = (Map<String, Object>) person;
+                Map<String, Object> p = (Map<String, Object>) pers;
                 int id = (int) p.get("id");
+                Users user = userRepository.findById(id);
+                Persons person = personRepository.findByUserid(user.getId());
+                Map<String, Object> profile = new HashMap<>();
+                profile.put("first_name", person.getFirstname());
+                profile.put("second_name", person.getFamilyname());
+                profile.put("middle_name", person.getMiddlename());
+                profile.put("birthday", person.getBirthday());
+                profile.put("email", person.getEmail());
+                profile.put("username", user.getUsername());
                 String debug = "";
+                List<Roles> rolesList = rolesRepository.findAll();
+                List<String> roles = new ArrayList<>();
+                for (Roles role : rolesList) {
+                    roles.add(role.getName());
+                }
+                Map<String, Object> rolesMap = new HashMap<>();
+                rolesMap.put("roles", roles);
+                rolesMap.put("profile", profile);
+                return rolesMap;
+
             } catch (Exception e){
 
             }
         }
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String name = authentication.getName();
-        Users user = userRepository.findByUsername(name);
-        Persons person = personRepository.findByUserid(user.getId());
-        Map<String, Object> profile = new HashMap<>();
-        profile.put("first_name", person.getFirstname());
-        profile.put("second_name", person.getFamilyname());
-        profile.put("middle_name", person.getMiddlename());
-        profile.put("birthday", person.getBirthday());
-        profile.put("email", person.getEmail());
-        profile.put("username", user.getUsername());
+
+
 
 //        return profile;
         List<Roles> rolesList = rolesRepository.findAll();

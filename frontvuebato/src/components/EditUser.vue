@@ -174,6 +174,11 @@ setInteractionMode('eager')
             }).then(response =>{
                 console.log( response );
                 this.roles = response.data.roles;
+                this.name = response.data.profile.name;
+                this.first_name = response.data.profile.first_name;
+                this.second_name = response.data.profile.second_name;
+                this.middle_name = response.data.profile.middle_name;
+                this.birthday = response.data.profile.birthday;
             }).catch((error) => {
                 console.log(error);
             })
