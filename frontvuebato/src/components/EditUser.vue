@@ -174,11 +174,12 @@ setInteractionMode('eager')
             }).then(response =>{
                 console.log( response );
                 this.roles = response.data.roles;
-                this.name = response.data.profile.name;
+                this.username = response.data.profile.username;
                 this.first_name = response.data.profile.first_name;
                 this.second_name = response.data.profile.second_name;
                 this.middle_name = response.data.profile.middle_name;
                 this.birthday = response.data.profile.birthday;
+                this.selectedRoles = response.data.userRoles;
             }).catch((error) => {
                 console.log(error);
             })
@@ -226,11 +227,12 @@ setInteractionMode('eager')
               }).then(response =>{
                 console.log( response );
                 this.roles = response.data.roles;
-                this.name = response.data.profile.name;
+                this.username = response.data.profile.username;
                 this.first_name = response.data.profile.first_name;
                 this.second_name = response.data.profile.second_name;
                 this.middle_name = response.data.profile.middle_name;
                 this.birthday = response.data.profile.birthday;
+                this.selectedRoles = response.data.userRoles;
               }).catch((error) => {
                 console.log(error);
               })

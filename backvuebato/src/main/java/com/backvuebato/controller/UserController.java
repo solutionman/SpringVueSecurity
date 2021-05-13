@@ -95,16 +95,20 @@ public class UserController {
             try {
                 Map<String, Object> p = (Map<String, Object>) pers;
                 int id = (int) p.get("id");
-                Users user = userRepository.findById(id);
-                Persons person = personRepository.findByUserid(user.getId());
+                Persons person = personRepository.findByUserid(id);
                 Map<String, Object> profile = new HashMap<>();
                 profile.put("first_name", person.getFirstname());
                 profile.put("second_name", person.getFamilyname());
                 profile.put("middle_name", person.getMiddlename());
                 profile.put("birthday", person.getBirthday());
                 profile.put("email", person.getEmail());
+                Users user = userRepository.findById(person.getUserid());
                 profile.put("username", user.getUsername());
                 String debug = "";
+                List<String> userRoles = new ArrayList<>();
+                for (Roles role : user.getRoles()){
+                    userRoles.add(role.getName());
+                }
                 List<Roles> rolesList = rolesRepository.findAll();
                 List<String> roles = new ArrayList<>();
                 for (Roles role : rolesList) {
@@ -113,6 +117,7 @@ public class UserController {
                 Map<String, Object> rolesMap = new HashMap<>();
                 rolesMap.put("roles", roles);
                 rolesMap.put("profile", profile);
+                rolesMap.put("userRoles", userRoles);
                 return rolesMap;
 
             } catch (Exception e){
