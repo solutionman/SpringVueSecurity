@@ -97,7 +97,7 @@
                             ></v-text-field>
                         </ValidationProvider>
 
-                        <v-btn class="mr-4" @click="submit">Create</v-btn>
+                        <v-btn class="mr-4" @click="submit">Save</v-btn>
                         <v-btn @click="clear">Clear</v-btn>
                     </form>
                 </ValidationObserver>
@@ -199,12 +199,12 @@ setInteractionMode('eager')
                     formValues["roles"] = this.selectedRoles;
                     this.$axios({
                         method: 'post',
-                        url: 'http://localhost:8080/backvuebato/newuser',
+                        url: 'http://localhost:8080/backvuebato/doEditUser',
                         // headers: {},
                         data: formValues
                     }).then(response => {
                         console.log(response);
-                        router.push({ name: 'Persons' });
+                        // router.push({ name: 'Persons' });
                         // this.first_name = response.data.first_name;
                         // this.second_name = response.data.second_name;
                         // this.middle_name = response.data.middle_name;
@@ -216,14 +216,32 @@ setInteractionMode('eager')
                 }
             },
             clear () {
-              this.username = '';
-              this.password = '';
-              this.confirm_password = '';
-              this.first_name = '';
-              this.second_name = '';
-              this.middle_name = '';
-              this.birthday = '';
-              this.email = '';
+              // TODO reload page removes params
+              console.log(this.$route.params);
+              let person = this.$route.params;
+              this.$axios({
+                method: 'post',
+                url: 'http://localhost:8080/backvuebato/editUser',
+                data: person
+              }).then(response =>{
+                console.log( response );
+                this.roles = response.data.roles;
+                this.name = response.data.profile.name;
+                this.first_name = response.data.profile.first_name;
+                this.second_name = response.data.profile.second_name;
+                this.middle_name = response.data.profile.middle_name;
+                this.birthday = response.data.profile.birthday;
+              }).catch((error) => {
+                console.log(error);
+              })
+              // this.username = '';
+              // this.password = '';
+              // this.confirm_password = '';
+              // this.first_name = '';
+              // this.second_name = '';
+              // this.middle_name = '';
+              // this.birthday = '';
+              // this.email = '';
                 // this.$axios({
                 //     method: 'post',
                 //     url: 'http://localhost:8080/backvuebato/profile'

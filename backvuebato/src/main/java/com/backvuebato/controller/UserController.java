@@ -133,6 +133,13 @@ public class UserController {
         return rolesMap;
     }
 
+    @PostMapping(value = "doEditUser")
+    public Map<String, Object> doEditUser(@RequestBody Map<String, Object> user){
+
+        Map<String, Object> editedUser = new HashMap<>();
+        return editedUser;
+    }
+
     @PostMapping(value = "newuser")
     public Map<String, Object> newUser(@RequestBody Map<String, Object> formValues) {
         if (null != userRepository.findByUsername(formValues.get("username").toString())) {
