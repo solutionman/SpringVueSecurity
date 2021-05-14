@@ -183,6 +183,7 @@ export default {
             this.second_name = response.data.profile.second_name;
             this.middle_name = response.data.profile.middle_name;
             this.birthday = response.data.profile.birthday;
+            this.email = response.data.profile.email;
             this.selectedRoles = response.data.userRoles;
         }).catch((error) => {
             console.log(error);
@@ -236,6 +237,7 @@ export default {
                 this.second_name = response.data.profile.second_name;
                 this.middle_name = response.data.profile.middle_name;
                 this.birthday = response.data.profile.birthday;
+                this.email = response.data.profile.email;
                 this.selectedRoles = response.data.userRoles;
             }).catch((error) => {
                 console.log(error);
