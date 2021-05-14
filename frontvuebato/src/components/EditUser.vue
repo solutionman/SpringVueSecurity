@@ -164,9 +164,13 @@ setInteractionMode('eager')
             }
         },
         mounted () {
-          // TODO reload page removes params
           console.log(this.$route.params);
           let person = this.$route.params;
+          // TODO reload page removes params
+          // for now just return back to Persons after refresh page
+          if(Object.keys(person).length === 0 && person.constructor === Object){
+            router.push({ name: 'Persons'});
+          }
             this.$axios({
                 method: 'post',
                 url: 'http://localhost:8080/backvuebato/editUser',
