@@ -13,66 +13,66 @@ import EditUser from "../components/EditUser";
 Vue.use(Router);
 
 const router = new Router({
-  mode: 'history',
-  routes: [
-    {
-      path: '/',
-      redirect: '/frontvuebato/home',
-    },
-    {
-      path: '/frontvuebato/home',
-      name: 'Home',
-      component: Home,
-      // meta: { nonRequiresAuth: true },
-    },
-    {
-      path: '/frontvuebato/profile',
-      name: 'Profile',
-      component: Profile,
-    },
-    {
-      path: '/frontvuebato/maps',
-      name: 'Maps',
-      component: Maps,
-    },
-    {
-      path: '/frontvuebato/newUser',
-      name: 'NewUser',
-      component: NewUser,
-    },
-    {
-      path: '/frontvuebato/editUser',
-      name: 'EditUser',
-      component: EditUser,
-    },
-    {
-      path: '/frontvuebato/persons',
-      name: 'Persons',
-      component: Persons,
-    },
-    {
-      path: '/frontvuebato/signIn',
-      name: 'signIn',
-      component: SignIn,
-      meta: { loginPage: true, nonRequiresAuth: true },
-    },
-    {
-      path: '*',
-      component: NotFound,
-    },
-  ],
+    mode: 'history',
+    routes: [
+        {
+            path: '/',
+            redirect: '/frontvuebato/home',
+        },
+        {
+            path: '/frontvuebato/home',
+            name: 'Home',
+            component: Home,
+            // meta: { nonRequiresAuth: true },
+        },
+        {
+            path: '/frontvuebato/profile',
+            name: 'Profile',
+            component: Profile,
+        },
+        {
+            path: '/frontvuebato/maps',
+            name: 'Maps',
+            component: Maps,
+        },
+        {
+            path: '/frontvuebato/newUser',
+            name: 'NewUser',
+            component: NewUser,
+        },
+        {
+            path: '/frontvuebato/editUser',
+            name: 'EditUser',
+            component: EditUser,
+        },
+        {
+            path: '/frontvuebato/persons',
+            name: 'Persons',
+            component: Persons,
+        },
+        {
+            path: '/frontvuebato/signIn',
+            name: 'signIn',
+            component: SignIn,
+            meta: {loginPage: true, nonRequiresAuth: true},
+        },
+        {
+            path: '*',
+            component: NotFound,
+        },
+    ],
 });
 
 router.beforeEach((to, from, next) => {
-  const requiresAuth = !to.matched.some((record) => record.meta.nonRequiresAuth);
-  const isLoginPage = to.matched.some((record) => record.meta.loginPage);
-  const isAuthenticated = localStorage.getItem('auth');
-  if (requiresAuth && !isAuthenticated) {
-    next('/frontvuebato/signIn');
-  } else if (isLoginPage && isAuthenticated) {
-    router.push('/frontvuebato/home');
-  }
-  next();
+    const requiresAuth = !to.matched.some((record) => record.meta.nonRequiresAuth);
+    const isLoginPage = to.matched.some((record) => record.meta.loginPage);
+    const isAuthenticated = localStorage.getItem('auth');
+    if (requiresAuth && !isAuthenticated) {
+        next('/frontvuebato/signIn');
+    } else if (isLoginPage && isAuthenticated) {
+        router.push('/frontvuebato/home');
+    }
+    next();
 });
 
 export default router;
