@@ -90,7 +90,7 @@ public class UserController {
     @PostMapping(value = "editUser")
     public Map<String, Object> editUser(@RequestBody Map<String, Object> userToEdit) {
         // TODO solve problem with losing parameter on reloading page (seems like I have to add userID to url)
-        if(!userToEdit.isEmpty()){
+        if (!userToEdit.isEmpty()) {
             Object pers = userToEdit.get("person");
             try {
                 Map<String, Object> p = (Map<String, Object>) pers;
@@ -106,7 +106,7 @@ public class UserController {
                 profile.put("username", user.getUsername());
                 String debug = "";
                 List<String> userRoles = new ArrayList<>();
-                for (Roles role : user.getRoles()){
+                for (Roles role : user.getRoles()) {
                     userRoles.add(role.getName());
                 }
                 List<Roles> rolesList = rolesRepository.findAll();
@@ -120,11 +120,10 @@ public class UserController {
                 rolesMap.put("userRoles", userRoles);
                 return rolesMap;
 
-            } catch (Exception e){
-
+            } catch (Exception e) {
+                java.lang.System.out.println("Error while getting person data " + e.getLocalizedMessage());
             }
         }
-
 
 
 //        return profile;
@@ -139,7 +138,7 @@ public class UserController {
     }
 
     @PostMapping(value = "doEditUser")
-    public Map<String, Object> doEditUser(@RequestBody Map<String, Object> user){
+    public Map<String, Object> doEditUser(@RequestBody Map<String, Object> user) {
 
         Map<String, Object> editedUser = new HashMap<>();
         return editedUser;
@@ -203,7 +202,7 @@ public class UserController {
                 Users user = userRepository.findByUsername(val.get("name").toString());
                 userRepository.deleteById(user.getId());
             }
-        } catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
