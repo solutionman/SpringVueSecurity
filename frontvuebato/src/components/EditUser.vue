@@ -131,9 +131,8 @@
                                         <v-text-field
                                             v-model = "pass"
                                             :rules="[rules.required, rules.min]"
-                                            label="Password*"
+                                            label="New Password*"
                                             hint="At least 8 characters"
-                                            value=""
                                             required
                                         ></v-text-field>
                                     </v-col>
@@ -141,9 +140,8 @@
                                         <v-text-field
                                             v-model = "pass_confirm"
                                             :rules="[rules.required, rules.min]"
-                                            label="Confirm Password*"
+                                            label="Confirm New Password*"
                                             hint="At least 8 characters"
-                                            value=""
                                             required
                                         ></v-text-field>
                                     </v-col>
@@ -156,7 +154,7 @@
                             <v-btn
                                 color="blue darken-1"
                                 text
-                                @click="dialog = false"
+                                @click="closeChangePass"
                             >
                                 Close
                             </v-btn>
@@ -345,6 +343,13 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
+            this.pass = '';
+            this.pass_confirm = '';
+        },
+        closeChangePass(){
+            this.dialog = false;
+            this.pass = '';
+            this.pass_confirm = '';
         },
     },
 }
