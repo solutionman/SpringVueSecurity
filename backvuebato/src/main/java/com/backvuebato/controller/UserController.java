@@ -144,6 +144,45 @@ public class UserController {
         return editedUser;
     }
 
+    @PostMapping(value = "changePass")
+    public Map<String, Object> changePass(@RequestBody Map<String, Object> userToEdit) {
+        if (!userToEdit.isEmpty()) {
+            Object pers = userToEdit.get("person");
+            try {
+                Map<String, Object> p = (Map<String, Object>) pers;
+                int id = (int) p.get("id");
+                Persons person = personRepository.findByUserid(id);
+                Map<String, Object> profile = new HashMap<>();
+                profile.put("first_name", person.getFirstname());
+                profile.put("second_name", person.getFamilyname());
+                profile.put("middle_name", person.getMiddlename());
+                profile.put("birthday", person.getBirthday());
+                profile.put("email", person.getEmail());
+                Users user = userRepository.findById(person.getUserid());
+                profile.put("username", user.getUsername());
+                List<String> userRoles = new ArrayList<>();
+                for (Roles role : user.getRoles()) {
+                    userRoles.add(role.getName());
+                }
+                List<Roles> rolesList = rolesRepository.findAll();
+                List<String> roles = new ArrayList<>();
+                for (Roles role : rolesList) {
+                    roles.add(role.getName());
+                }
+                Map<String, Object> rolesMap = new HashMap<>();
+                rolesMap.put("roles", roles);
+                rolesMap.put("profile", profile);
+                rolesMap.put("userRoles", userRoles);
+                return rolesMap;
+
+            } catch (Exception e) {
+                java.lang.System.out.println("Error while getting person data " + e.getLocalizedMessage());
+            }
+        }
+        Map<String, Object> editedUser = new HashMap<>();
+        return editedUser;
+    }
+
     @PostMapping(value = "newuser")
     public Map<String, Object> newUser(@RequestBody Map<String, Object> formValues) {
         if (null != userRepository.findByUsername(formValues.get("username").toString())) {

@@ -155,7 +155,7 @@
                             <v-btn
                                 color="blue darken-1"
                                 text
-                                @click="dialog = false"
+                                @click="changePass"
                             >
                                 Save
                             </v-btn>
@@ -304,28 +304,28 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
-            // this.username = '';
-            // this.password = '';
-            // this.confirm_password = '';
-            // this.first_name = '';
-            // this.second_name = '';
-            // this.middle_name = '';
-            // this.birthday = '';
-            // this.email = '';
-            // this.$axios({
-            //     method: 'post',
-            //     url: 'http://localhost:8080/backvuebato/profile'
-            // }).then(response =>{
-            //     // console.log( response );
-            //     this.first_name = response.data.first_name;
-            //     this.second_name = response.data.second_name;
-            //     this.middle_name = response.data.middle_name;
-            //     this.birthday = response.data.birthday;
-            //     this.email = response.data.email;
-            // }).catch((error) => {
-            //     console.log(error);
-            // })
-            // this.$refs.observer.reset()
+        },
+        changePass() {
+            this.dialog = false
+            let person = this.$route.params;
+            person["pass"] = "123";
+            this.$axios({
+                method: 'post',
+                url: 'http://localhost:8080/backvuebato/changePass',
+                data: person
+            }).then(response => {
+                console.log(response);
+                this.roles = response.data.roles;
+                this.username = response.data.profile.username;
+                this.first_name = response.data.profile.first_name;
+                this.second_name = response.data.profile.second_name;
+                this.middle_name = response.data.profile.middle_name;
+                this.birthday = response.data.profile.birthday;
+                this.email = response.data.profile.email;
+                this.selectedRoles = response.data.userRoles;
+            }).catch((error) => {
+                console.log(error);
+            })
         },
     },
 }
