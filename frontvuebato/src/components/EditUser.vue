@@ -129,12 +129,14 @@
                                 <v-row>
                                     <v-col cols="12">
                                         <v-text-field
+                                            v-model = "pass"
                                             label="Password*"
                                             required
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="12">
                                         <v-text-field
+                                            v-model = "pass_confirm"
                                             label="Confirm Password*"
                                             required
                                         ></v-text-field>
@@ -222,7 +224,9 @@ export default {
             select: null,
             roles: [],
             selectedRoles: [],
-            dialog: false
+            dialog: false,
+            pass: '',
+            pass_confirm: '',
         }
     },
     mounted() {
@@ -308,7 +312,7 @@ export default {
         changePass() {
             this.dialog = false
             let person = this.$route.params;
-            person["pass"] = "123";
+            person["pass"] = this.pass;
             this.$axios({
                 method: 'post',
                 url: 'http://localhost:8080/backvuebato/changePass',
