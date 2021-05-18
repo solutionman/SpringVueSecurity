@@ -130,14 +130,20 @@
                                     <v-col cols="12">
                                         <v-text-field
                                             v-model = "pass"
+                                            :rules="[rules.required, rules.min]"
                                             label="Password*"
+                                            hint="At least 8 characters"
+                                            value=""
                                             required
                                         ></v-text-field>
                                     </v-col>
                                     <v-col cols="12">
                                         <v-text-field
                                             v-model = "pass_confirm"
+                                            :rules="[rules.required, rules.min]"
                                             label="Confirm Password*"
+                                            hint="At least 8 characters"
+                                            value=""
                                             required
                                         ></v-text-field>
                                     </v-col>
@@ -227,6 +233,11 @@ export default {
             dialog: false,
             pass: '',
             pass_confirm: '',
+            rules: {
+                required: value => !!value || 'Required.',
+                min: v => v.length >= 8 || 'Min 8 characters',
+                emailMatch: () => (`The email and password you entered don't match`),
+            },
         }
     },
     mounted() {
@@ -310,6 +321,10 @@ export default {
             })
         },
         changePass() {
+            if( this.pass === '' || this.pass !== this.pass_confirm){
+                console.log('Password and Confirm Password should match ')
+                return;
+            }
             this.dialog = false
             let person = this.$route.params;
             person["pass"] = this.pass;
