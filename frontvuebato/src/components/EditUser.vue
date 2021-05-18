@@ -23,24 +23,6 @@
                                 required
                             ></v-text-field>
                         </ValidationProvider>
-                        <ValidationProvider v-slot="{ errors }" name="Password" rules="required|min:8|max:30">
-                            <v-text-field
-                                v-model="password"
-                                :counter="30"
-                                :error-messages="errors"
-                                label="Password"
-                                required
-                            ></v-text-field>
-                        </ValidationProvider>
-                        <ValidationProvider v-slot="{ errors }" name="Confirm Password" rules="required|min:8|max:30">
-                            <v-text-field
-                                v-model="confirm_password"
-                                :counter="30"
-                                :error-messages="errors"
-                                label="Confirm password"
-                                required
-                            ></v-text-field>
-                        </ValidationProvider>
                         <ValidationProvider v-slot="{ errors }" name="Роль" rules="required|min:1|max:30">
                             <v-select
                                 v-model="selectedRoles"
@@ -217,8 +199,6 @@ export default {
     data() {
         return {
             username: '',
-            password: '',
-            confirm_password: '',
             first_name: '',
             second_name: '',
             middle_name: '',
