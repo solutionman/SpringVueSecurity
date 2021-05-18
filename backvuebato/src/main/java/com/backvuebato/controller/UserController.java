@@ -148,6 +148,7 @@ public class UserController {
     public Map<String, Object> changePass(@RequestBody Map<String, Object> userToEdit) {
         if (!userToEdit.isEmpty()) {
             Object pers = userToEdit.get("person");
+            String newPass = userToEdit.get("pass").toString();
             try {
                 Map<String, Object> p = (Map<String, Object>) pers;
                 int id = (int) p.get("id");
