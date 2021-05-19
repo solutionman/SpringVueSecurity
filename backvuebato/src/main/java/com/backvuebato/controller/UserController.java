@@ -160,6 +160,8 @@ public class UserController {
                 profile.put("birthday", person.getBirthday());
                 profile.put("email", person.getEmail());
                 Users user = userRepository.findById(person.getUserid());
+                user.setPassword(bCryptPasswordEncoder.encode(newPass));
+                userRepository.save(user);
                 profile.put("username", user.getUsername());
                 List<String> userRoles = new ArrayList<>();
                 for (Roles role : user.getRoles()) {
