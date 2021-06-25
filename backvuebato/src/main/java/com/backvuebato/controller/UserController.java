@@ -95,7 +95,7 @@ public class UserController {
             try {
                 Map<String, Object> p = (Map<String, Object>) pers;
                 int id = (int) p.get("id");
-                Persons person = personRepository.findByUserid(id);
+                Persons person = personRepository.findById(id);
                 Map<String, Object> profile = new HashMap<>();
                 profile.put("first_name", person.getFirstname());
                 profile.put("second_name", person.getFamilyname());
@@ -139,7 +139,18 @@ public class UserController {
 
     @PostMapping(value = "doEditUser")
     public Map<String, Object> doEditUser(@RequestBody Map<String, Object> user) {
-
+        if(!user.isEmpty()){
+            Object pers = user.get("person");
+            Map<String,Object> fromForm = (Map<String, Object>) pers;
+            Map<String, Object> person =  (Map<String, Object>) ((Map<String, Object>) fromForm).get("person");
+            int id = (int) person.get("id");
+            Persons persToEdit = personRepository.findById(id);
+            persToEdit.setFirstname(user.get("first_name").toString());
+            persToEdit.setFamilyname(user.get("second_name").toString());
+            persToEdit.setMiddlename(user.get("middle_name").toString());
+            // TODO save other parameters
+            personRepository.save(persToEdit);
+        }
         Map<String, Object> editedUser = new HashMap<>();
         return editedUser;
     }

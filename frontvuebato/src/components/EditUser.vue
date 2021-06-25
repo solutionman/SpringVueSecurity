@@ -258,6 +258,13 @@ export default {
                 formValues["birthday"] = this.birthday;
                 formValues["email"] = this.email;
                 formValues["roles"] = this.selectedRoles;
+                console.log(this.$route.params);
+                let person = this.$route.params;
+                // If on the moment of editing user no user in route.params, for now just return back
+                if (Object.keys(person).length === 0 && person.constructor === Object) {
+                  router.push({name: 'Persons'});
+                }
+                formValues["person"] = person;
                 this.$axios({
                     method: 'post',
                     url: 'http://localhost:8080/backvuebato/doEditUser',

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly=true)
 public interface PersonRepository extends JpaRepository<Persons, Integer> {
     Persons findByUserid(int userid);
+    Persons findById(int id);
     Page<Persons> findByFamilynameContainingIgnoreCaseOrFirstnameContainingIgnoreCaseOrMiddlenameContainingIgnoreCase(
             String familyName, String firstName, String middleName, Pageable pageable);
 }
