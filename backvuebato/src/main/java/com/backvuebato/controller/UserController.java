@@ -138,18 +138,20 @@ public class UserController {
     }
 
     @PostMapping(value = "doEditUser")
-    public Map<String, Object> doEditUser(@RequestBody Map<String, Object> user) {
-        if(!user.isEmpty()){
-            Object pers = user.get("person");
-            Map<String,Object> fromForm = (Map<String, Object>) pers;
-            Map<String, Object> person =  (Map<String, Object>) ((Map<String, Object>) fromForm).get("person");
+    public Map<String, Object> doEditUser(@RequestBody Map<String, Object> formValues) {
+        if (!formValues.isEmpty()) {
+            Object pers = formValues.get("person");
+            Map<String, Object> fromForm = (Map<String, Object>) pers;
+            Map<String, Object> person = (Map<String, Object>) ((Map<String, Object>) fromForm).get("person");
             int id = (int) person.get("id");
             Persons persToEdit = personRepository.findById(id);
-            persToEdit.setFirstname(user.get("first_name").toString());
-            persToEdit.setFamilyname(user.get("second_name").toString());
-            persToEdit.setMiddlename(user.get("middle_name").toString());
+            persToEdit.setFirstname(formValues.get("first_name").toString());
+            persToEdit.setFamilyname(formValues.get("second_name").toString());
+            persToEdit.setMiddlename(formValues.get("middle_name").toString());
+            persToEdit.setBirthday(dateParseUtils.stringToSqlDate(formValues.get("birthday").toString()));
+            persToEdit.setEmail(formValues.get("email").toString());
             Users userToEdit = userRepository.findById(persToEdit.getUserid());
-            userToEdit.setUsername(user.get("username").toString());
+            userToEdit.setUsername(formValues.get("username").toString());
             // TODO save other parameters
             personRepository.save(persToEdit);
         }
