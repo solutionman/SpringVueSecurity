@@ -251,7 +251,6 @@ export default {
             if (isValid) {
                 let formValues = {};
                 formValues["username"] = this.username;
-                formValues["password"] = this.password;
                 formValues["first_name"] = this.first_name;
                 formValues["second_name"] = this.second_name;
                 formValues["middle_name"] = this.middle_name;
@@ -273,11 +272,12 @@ export default {
                 }).then(response => {
                     console.log(response);
                     // router.push({ name: 'Persons' });
-                    // this.first_name = response.data.first_name;
-                    // this.second_name = response.data.second_name;
-                    // this.middle_name = response.data.middle_name;
-                    // this.birthday = response.data.birthday;
-                    // this.email = response.data.email;
+                    this.username = response.data.username;
+                    this.first_name = response.data.first_name;
+                    this.second_name = response.data.second_name;
+                    this.middle_name = response.data.middle_name;
+                    this.birthday = response.data.birthday;
+                    this.email = response.data.email;
                 }).catch((error) => {
                     console.log(error);
                 })

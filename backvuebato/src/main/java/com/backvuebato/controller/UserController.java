@@ -155,8 +155,7 @@ public class UserController {
             // TODO save other parameters
             personRepository.save(persToEdit);
         }
-        Map<String, Object> editedUser = new HashMap<>();
-        return editedUser;
+        return formValues;
     }
 
     @PostMapping(value = "changePass")
