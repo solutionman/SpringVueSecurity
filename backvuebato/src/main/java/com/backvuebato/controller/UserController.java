@@ -148,6 +148,8 @@ public class UserController {
             persToEdit.setFirstname(user.get("first_name").toString());
             persToEdit.setFamilyname(user.get("second_name").toString());
             persToEdit.setMiddlename(user.get("middle_name").toString());
+            Users userToEdit = userRepository.findById(persToEdit.getUserid());
+            userToEdit.setUsername(user.get("username").toString());
             // TODO save other parameters
             personRepository.save(persToEdit);
         }
