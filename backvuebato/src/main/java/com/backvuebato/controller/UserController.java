@@ -152,7 +152,13 @@ public class UserController {
             persToEdit.setEmail(formValues.get("email").toString());
             Users userToEdit = userRepository.findById(persToEdit.getUserid());
             userToEdit.setUsername(formValues.get("username").toString());
-            // TODO save other parameters
+            List<String> roles = (List<String>) formValues.get("roles");
+            Set<Roles> rolesToSet = new HashSet<>();
+            for (String role : roles) {
+                Roles roleToAdd = rolesRepository.findByName(role);
+                rolesToSet.add(roleToAdd);
+            }
+            userToEdit.setRoles(rolesToSet);
             personRepository.save(persToEdit);
         }
         return formValues;
