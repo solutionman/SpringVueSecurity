@@ -10,7 +10,7 @@
           dark
           @click.stop="drawer = !drawer"
       >
-        Система
+        Навигация
       </v-btn>
       <v-spacer />
       <v-toolbar-items >
