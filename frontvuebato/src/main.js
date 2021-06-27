@@ -11,6 +11,8 @@ axios.defaults.withCredentials = true;
 
 // Setting up Axios on Vue Instance, for use via this.$axios
 Vue.prototype.$axios = axios;
+// set current ip here
+// Vue.prototype.$api_url = "http://192.168.0.102:8080/backvuebato/";
 Vue.prototype.$api_url = "http://localhost:8080/backvuebato/";
 Vue.config.productionTip = false;
 Vue.prototype.$moment = moment;
@@ -18,18 +20,20 @@ Vue.use(VueCsrf);
 
 axios.interceptors.response.use((response) => Promise.resolve(response),
     (error) => {
-      if (error.response.status === 401) {
-        console.log('Unauthorized, logging out ...');
-        store.dispatch('userSignOut');
-        router.replace('/frontvuebato/signIn');
-        return Promise.reject(error);
-      }
-      return Promise.reject(error.response);
+        if (error.response.status === 401) {
+            console.log('Unauthorized, logging out ...');
+            store.dispatch('userSignOut');
+            router.replace('/frontvuebato/signIn');
+            return Promise.reject(error);
+        }
+        return Promise.reject(error.response);
     });
 
 new Vue({
-  router,
-  store,
-  vuetify,
-  render(h) { return h(App); },
+    router,
+    store,
+    vuetify,
+    render(h) {
+        return h(App);
+    },
 }).$mount('#app');
