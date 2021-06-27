@@ -166,7 +166,7 @@ export default {
     mounted() {
         this.$axios({
             method: 'post',
-            url: 'http://localhost:8080/backvuebato/roles',
+            url: this.$api_url + 'roles',
         }).then(response => {
             console.log(response);
             this.roles = response.data.roles;
@@ -190,7 +190,7 @@ export default {
                 formValues["roles"] = this.selectedRoles;
                 this.$axios({
                     method: 'post',
-                    url: 'http://localhost:8080/backvuebato/newuser',
+                    url: this.$api_url + 'newuser',
                     // headers: {},
                     data: formValues
                 }).then(response => {

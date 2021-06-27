@@ -48,7 +48,7 @@ export default {
   methods: {
     getHomePageInformation() {
       this.$axios
-        .post('http://localhost:8080/backvuebato/profile')
+        .post(this.$api_url + 'profile')
         .then((response) => {
           // console.log('Get response: ', response.data);
           this.data = response.data;

@@ -228,7 +228,7 @@ export default {
         }
         this.$axios({
             method: 'post',
-            url: 'http://localhost:8080/backvuebato/editUser',
+            url: this.$api_url + 'editUser',
             data: person
         }).then(response => {
             console.log(response);
@@ -266,7 +266,7 @@ export default {
                 formValues["person"] = person;
                 this.$axios({
                     method: 'post',
-                    url: 'http://localhost:8080/backvuebato/doEditUser',
+                    url: this.$api_url + 'doEditUser',
                     // headers: {},
                     data: formValues
                 }).then(response => {
@@ -289,7 +289,7 @@ export default {
             let person = this.$route.params;
             this.$axios({
                 method: 'post',
-                url: 'http://localhost:8080/backvuebato/editUser',
+                url: this.$api_url + 'editUser',
                 data: person
             }).then(response => {
                 console.log(response);
@@ -315,7 +315,7 @@ export default {
             person["pass"] = this.pass;
             this.$axios({
                 method: 'post',
-                url: 'http://localhost:8080/backvuebato/changePass',
+                url: this.$api_url + 'changePass',
                 data: person
             }).then(response => {
                 console.log(response);

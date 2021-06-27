@@ -112,7 +112,7 @@ export default {
                 options["search"] = this.search;
                 this.$axios({
                     method: 'post',
-                    url: 'http://localhost:8080/backvuebato/persons',
+                    url: this.$api_url + 'persons',
                     data: options
                 }).then(response => {
                     console.log(response);
@@ -136,7 +136,7 @@ export default {
                 options["search"] = this.search;
                 this.$axios({
                     method: 'post',
-                    url: 'http://localhost:8080/backvuebato/persons',
+                    url: this.$api_url + 'persons',
                     data: options
                 }).then(response => {
                     console.log(response);
@@ -179,7 +179,7 @@ export default {
             console.log(options);
             this.$axios({
                 method: 'post',
-                url: 'http://localhost:8080/backvuebato/delete',
+                url: this.$api_url + 'delete',
                 data: options
             }).then(response => {
                 console.log(response);

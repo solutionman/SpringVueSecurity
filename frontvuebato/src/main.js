@@ -11,6 +11,7 @@ axios.defaults.withCredentials = true;
 
 // Setting up Axios on Vue Instance, for use via this.$axios
 Vue.prototype.$axios = axios;
+Vue.prototype.$api_url = "http://localhost:8080/backvuebato/";
 Vue.config.productionTip = false;
 Vue.prototype.$moment = moment;
 Vue.use(VueCsrf);

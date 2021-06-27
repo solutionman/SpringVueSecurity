@@ -121,7 +121,7 @@ export default {
     mounted() {
         this.$axios({
             method: 'post',
-            url: 'http://localhost:8080/backvuebato/profile',
+            url: this.$api_url + 'profile',
         }).then(response => {
             // console.log( response );
             this.first_name = response.data.first_name;
@@ -146,7 +146,7 @@ export default {
                 formValues["birthday"] = this.birthday;
                 this.$axios({
                     method: 'post',
-                    url: 'http://localhost:8080/backvuebato/edit_profile',
+                    url: this.$api_url + 'edit_profile',
                     // headers: {},
                     data: formValues
                 }).then(response => {
@@ -164,7 +164,7 @@ export default {
         clear() {
             this.$axios({
                 method: 'post',
-                url: 'http://localhost:8080/backvuebato/profile'
+                url: this.$api_url + 'profile'
             }).then(response => {
                 // console.log( response );
                 this.first_name = response.data.first_name;
