@@ -63,3 +63,13 @@ Port: 8000     (by default tomcat listen 8000 port)
 Host: localhost
 
 
+To get application working from other devices change localhost to ip / url of tomcat with backvuebato
+
+Vue.prototype.$api_url = "http://localhost:8080/backvuebato/";
+axios.post('http://localhost:8080/backvuebato/login', data)
+
+and here put ip/url of tomcat with frontvuebato
+config.setAllowedOrigins(Arrays.asList("http://localhost:8081"));
+
+
+
