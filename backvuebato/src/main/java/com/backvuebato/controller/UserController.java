@@ -330,22 +330,31 @@ public class UserController {
         String debug = "";
         // TODO create random users
 
-        String userName = generateAlphabeticRandom();
+        String userName = generateAlphabeticRandom("username");
+        // TODO check is username unique
+        String firstName = generateAlphabeticRandom("firstName");
+        String familyName = generateAlphabeticRandom("familyName");
+        String middleName = generateAlphabeticRandom("middleName");
 
         String pass = generateAlphaNumericRandom();
 
         return new HashMap<>();
     }
 
-    String generateAlphabeticRandom() {
+    String generateAlphabeticRandom(String target) {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
         int targetStringLength = 10;
         Random random = new Random();
-        return random.ints(leftLimit, rightLimit + 1)
+        String rand = random.ints(leftLimit, rightLimit + 1)
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
+        if(target.equals("username")){
+            return rand;
+        } else {
+            return rand.substring(0,1).toUpperCase() + rand.substring(1);
+        }
     }
 
     String generateAlphaNumericRandom() {
