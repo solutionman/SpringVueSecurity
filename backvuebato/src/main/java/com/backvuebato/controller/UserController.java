@@ -331,7 +331,9 @@ public class UserController {
         // TODO create random users
 
         String userName = generateAlphabeticRandom("username");
-        // TODO check is username unique
+        while (userRepository.findByUsername(userName) != null) {
+            userName = generateAlphabeticRandom("username");
+        }
         String firstName = generateAlphabeticRandom("firstName");
         String familyName = generateAlphabeticRandom("familyName");
         String middleName = generateAlphabeticRandom("middleName");
@@ -350,10 +352,10 @@ public class UserController {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-        if(target.equals("username")){
+        if (target.equals("username")) {
             return rand;
         } else {
-            return rand.substring(0,1).toUpperCase() + rand.substring(1);
+            return rand.substring(0, 1).toUpperCase() + rand.substring(1);
         }
     }
 
