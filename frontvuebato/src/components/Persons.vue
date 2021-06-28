@@ -20,7 +20,7 @@
         >
             <template v-slot:top>
                 <v-toolbar flat>
-                    <v-toolbar-title>Пользователи системы</v-toolbar-title>
+                    <v-toolbar-title>Пользователи</v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-btn
                         color="#74C2F2"
@@ -38,6 +38,12 @@
                         color="#F7C5C5"
                         @click="deleteUser">
                         Удалить
+                    </v-btn>
+                    <v-spacer></v-spacer>
+                    <v-btn
+                        color="#EAF23A"
+                        @click="generateUsers">
+                        Сгенерировать
                     </v-btn>
                     <v-spacer></v-spacer>
                     <v-switch
@@ -189,6 +195,23 @@ export default {
             }).catch((error) => {
                 console.log(error);
             })
+        },
+        generateUsers(){
+          console.log("generating users");
+          this.loading = true;
+          let options = {};
+          options["amount"] = 10;
+          this.$axios({
+              method: 'post',
+              url: this.$api_url + 'generate',
+              data: options
+          }).then(response =>{
+              this.loading = false;
+              console.log(response);
+          }).catch((error)=>{
+              this.loading = false;
+              console.log(error);
+          })
         }
     }
     // mounted() {

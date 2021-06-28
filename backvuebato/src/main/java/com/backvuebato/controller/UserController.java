@@ -325,4 +325,13 @@ public class UserController {
         return resultMap;
     }
 
+    @PostMapping("generate")
+    public Map<String, Object> generateUsers(){
+        String debug = "";
+        // TODO create random users
+
+
+        return new HashMap<>();
+    }
+
 }
