@@ -327,7 +327,7 @@ public class UserController {
 
     @PostMapping("generate")
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> options) {
-        int amount = (int) options.get("amount");
+        int amount = Integer.parseInt(options.get("amount").toString());
         for (int i = 0; i < amount; i++) {
             String userName = generateAlphabeticRandom("username");
             while (userRepository.findByUsername(userName) != null) {
