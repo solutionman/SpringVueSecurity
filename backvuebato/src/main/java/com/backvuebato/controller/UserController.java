@@ -327,19 +327,30 @@ public class UserController {
 
     @PostMapping("generate")
     public Map<String, Object> generateUsers() {
-        String debug = "";
-        // TODO create random users
+        for (int i = 0; i < 10; i++) {
+            String userName = generateAlphabeticRandom("username");
+            while (userRepository.findByUsername(userName) != null) {
+                userName = generateAlphabeticRandom("username");
+            }
+            String firstName = generateAlphabeticRandom("firstName");
+            String familyName = generateAlphabeticRandom("familyName");
+            String middleName = generateAlphabeticRandom("middleName");
+            Set<Roles> roles = generateRoles();
+            String pass = generateAlphaNumericRandom();
 
-        String userName = generateAlphabeticRandom("username");
-        while (userRepository.findByUsername(userName) != null) {
-            userName = generateAlphabeticRandom("username");
+            Users user = new Users();
+            user.setUsername(firstName);
+            user.setPassword(bCryptPasswordEncoder.encode(pass));
+            user.setRoles(roles);
+            userRepository.save(user);
+            Persons person = new Persons();
+            person.setUserid(user.getId());
+            person.setFirstname(firstName);
+            person.setFamilyname(familyName);
+            person.setMiddlename(middleName);
+            // TODO set birthdate and email
+            personRepository.save(person);
         }
-        String firstName = generateAlphabeticRandom("firstName");
-        String familyName = generateAlphabeticRandom("familyName");
-        String middleName = generateAlphabeticRandom("middleName");
-
-        String pass = generateAlphaNumericRandom();
-
         return new HashMap<>();
     }
 
@@ -369,5 +380,21 @@ public class UserController {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
+    }
+
+    Set<Roles> generateRoles() {
+        List<Roles> roles = rolesRepository.findAll();
+        int amountOfRoles = roles.size();
+        Random random = new Random();
+        int timesToRemove = random.nextInt(amountOfRoles - 1);
+        while (timesToRemove > 0) {
+            try {
+                roles.remove(random.nextInt(amountOfRoles - 1));
+            } catch (Exception e) {
+                java.lang.System.out.println(e.getMessage());
+            }
+            timesToRemove--;
+        }
+        return new HashSet<>(roles);
     }
 }
