@@ -339,7 +339,7 @@ public class UserController {
             String pass = generateAlphaNumericRandom();
 
             Users user = new Users();
-            user.setUsername(firstName);
+            user.setUsername(userName);
             user.setPassword(bCryptPasswordEncoder.encode(pass));
             user.setRoles(roles);
             userRepository.save(user);
