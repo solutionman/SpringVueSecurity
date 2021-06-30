@@ -200,7 +200,7 @@ export default {
           console.log("generating users");
           this.loading = true;
           let options = {};
-          options["amount"] = 10;
+          options["amount"] = 5;
           this.$axios({
               method: 'post',
               url: this.$api_url + 'generate',
