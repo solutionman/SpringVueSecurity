@@ -290,7 +290,7 @@ public class UserController {
             String middleName = generateAlphabeticRandom("middleName");
             Set<Roles> roles = generateRoles();
             String pass = generateAlphaNumericRandom();
-            Date randomDatte = randomDateUtils.randomSqlDate();
+            Date randomDate = randomDateUtils.randomSqlDate();
 
             Users user = new Users();
             user.setUsername(userName);
@@ -302,7 +302,7 @@ public class UserController {
             person.setFirstname(firstName);
             person.setFamilyname(familyName);
             person.setMiddlename(middleName);
-            person.setBirthday(randomDatte);
+            person.setBirthday(randomDate);
             // TODO set email
             personRepository.save(person);
         }
