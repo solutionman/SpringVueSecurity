@@ -7,6 +7,7 @@ import com.backvuebato.repository.PersonRepository;
 import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
 import com.backvuebato.utils.DateParseUtils;
+import com.backvuebato.utils.RandomDateUtils;
 import net.minidev.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Integer.parseInt;
 
@@ -33,6 +38,7 @@ public class UserController {
     private final PersonRepository personRepository;
     private final RolesRepository rolesRepository;
     DateParseUtils dateParseUtils = new DateParseUtils();
+    RandomDateUtils randomDateUtils = new RandomDateUtils();
 
     public UserController(UserRepository userRepository, PersonRepository personRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
@@ -284,6 +290,7 @@ public class UserController {
             String middleName = generateAlphabeticRandom("middleName");
             Set<Roles> roles = generateRoles();
             String pass = generateAlphaNumericRandom();
+            Date randomDatte = randomDateUtils.randomSqlDate();
 
             Users user = new Users();
             user.setUsername(userName);
@@ -295,7 +302,8 @@ public class UserController {
             person.setFirstname(firstName);
             person.setFamilyname(familyName);
             person.setMiddlename(middleName);
-            // TODO set birthdate and email
+            person.setBirthday(randomDatte);
+            // TODO set email
             personRepository.save(person);
         }
 
