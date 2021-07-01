@@ -257,11 +257,20 @@ export default {
             this.loading = true;
             let options = {};
             options["amount"] = this.amount;
+            options["sortBy"] = this.options.sortBy;
+            options["sortDesc"] = this.options.sortDesc;
+            options["page"] = this.options.page;
+            options["itemsPerPage"] = this.options.itemsPerPage;
+            options["search"] = this.search;
+            options["selected"] = this.selected;
+            console.log(options);
             this.$axios({
                 method: 'post',
                 url: this.$api_url + 'generate',
                 data: options
             }).then(response => {
+                this.persons = response.data.persons;
+                this.totalPersons = response.data.totalPersons;
                 this.loading = false;
                 console.log(response);
             }).catch((error) => {
