@@ -8,8 +8,7 @@ import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
 import com.backvuebato.utils.DateParseUtils;
 import com.backvuebato.utils.GenerateUsers;
-import com.backvuebato.utils.RandomDateUtils;
-import lombok.SneakyThrows;
+import com.backvuebato.utils.RandomUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,7 +33,7 @@ public class UserController {
     private final PersonRepository personRepository;
     private final RolesRepository rolesRepository;
     DateParseUtils dateParseUtils = new DateParseUtils();
-    RandomDateUtils randomDateUtils = new RandomDateUtils();
+    RandomUtils randomUtils = new RandomUtils();
 
     public UserController(UserRepository userRepository, PersonRepository personRepository, RolesRepository rolesRepository) {
         this.userRepository = userRepository;
@@ -278,17 +277,17 @@ public class UserController {
         for (int i = 0; i < amount; i++) {
             GenerateUsers generateUsers = new GenerateUsers();
             generateUsers.run();
-            String userName = generateAlphabeticRandom("username");
+            String userName = randomUtils.generateAlphabeticRandom("username");
             while (userRepository.findByUsername(userName) != null) {
-                userName = generateAlphabeticRandom("username");
+                userName = randomUtils.generateAlphabeticRandom("username");
             }
-            String firstName = generateAlphabeticRandom("firstName");
-            String familyName = generateAlphabeticRandom("familyName");
-            String middleName = generateAlphabeticRandom("middleName");
-            Set<Roles> roles = generateRoles();
-            String pass = generateAlphaNumericRandom();
-            Date randomDate = randomDateUtils.randomSqlDate();
-            String email = generateAlphabeticRandom("email");
+            String firstName = randomUtils.generateAlphabeticRandom("firstName");
+            String familyName = randomUtils.generateAlphabeticRandom("familyName");
+            String middleName = randomUtils.generateAlphabeticRandom("middleName");
+            Set<Roles> roles = randomUtils.generateRoles(rolesRepository);
+            String pass = randomUtils.generateAlphaNumericRandom();
+            Date randomDate = randomUtils.randomSqlDate();
+            String email = randomUtils.generateAlphabeticRandom("email");
 
             Users user = new Users();
             user.setUsername(userName);
@@ -364,52 +363,5 @@ public class UserController {
         resultMap.put("totalPersons", totalPersons);
 
         return resultMap;
-    }
-
-    String generateAlphabeticRandom(String target) {
-        int leftLimit = 97; // letter 'a'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
-        Random random = new Random();
-        String rand = random.ints(leftLimit, rightLimit + 1)
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
-        switch (target) {
-            case "username":
-                return rand;
-            case "email":
-                return rand + "@mail.com";
-            default:
-                return rand.substring(0, 1).toUpperCase() + rand.substring(1);
-        }
-    }
-
-    String generateAlphaNumericRandom() {
-        int leftLimit = 48; // numeral '0'
-        int rightLimit = 122; // letter 'z'
-        int targetStringLength = 10;
-        Random random = new Random();
-        return random.ints(leftLimit, rightLimit + 1)
-                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
-                .limit(targetStringLength)
-                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
-                .toString();
-    }
-
-    Set<Roles> generateRoles() {
-        List<Roles> roles = rolesRepository.findAll();
-        int amountOfRoles = roles.size();
-        Random random = new Random();
-        int timesToRemove = random.nextInt(amountOfRoles - 1);
-        while (timesToRemove > 0) {
-            try {
-                roles.remove(random.nextInt(amountOfRoles - 1));
-            } catch (Exception e) {
-                java.lang.System.out.println(e.getMessage());
-            }
-            timesToRemove--;
-        }
-        return new HashSet<>(roles);
     }
 }
