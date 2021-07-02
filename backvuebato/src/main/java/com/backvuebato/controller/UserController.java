@@ -275,37 +275,9 @@ public class UserController {
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
         int amount = Integer.parseInt(data.get("amount").toString());
         for (int i = 0; i < amount; i++) {
-
-            GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository);
+            GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository, bCryptPasswordEncoder, personRepository);
             generateUsers.run();
-
-            String userName = randomUtils.generateAlphabeticRandom("username");
-            while (userRepository.findByUsername(userName) != null) {
-                userName = randomUtils.generateAlphabeticRandom("username");
-            }
-            String firstName = randomUtils.generateAlphabeticRandom("firstName");
-            String familyName = randomUtils.generateAlphabeticRandom("familyName");
-            String middleName = randomUtils.generateAlphabeticRandom("middleName");
-            Set<Roles> roles = randomUtils.generateRoles(rolesRepository);
-            String pass = randomUtils.generateAlphaNumericRandom();
-            Date randomDate = randomUtils.randomSqlDate();
-            String email = randomUtils.generateAlphabeticRandom("email");
-
-            Users user = new Users();
-            user.setUsername(userName);
-            user.setPassword(bCryptPasswordEncoder.encode(pass));
-            user.setRoles(roles);
-            userRepository.save(user);
-            Persons person = new Persons();
-            person.setUserid(user.getId());
-            person.setFirstname(firstName);
-            person.setFamilyname(familyName);
-            person.setMiddlename(middleName);
-            person.setBirthday(randomDate);
-            person.setEmail(email);
-            personRepository.save(person);
         }
-
         return sortedTable(data);
     }
 
