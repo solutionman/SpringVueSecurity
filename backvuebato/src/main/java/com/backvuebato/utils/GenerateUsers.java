@@ -18,7 +18,8 @@ public class GenerateUsers implements Runnable{
     BCryptPasswordEncoder bCryptPasswordEncoder;
     PersonRepository personRepository;
 
-    public GenerateUsers(UserRepository userRepository, RolesRepository rolesRepository, BCryptPasswordEncoder bCryptPasswordEncoder, PersonRepository personRepository){
+    public GenerateUsers(UserRepository userRepository, RolesRepository rolesRepository,
+                         BCryptPasswordEncoder bCryptPasswordEncoder, PersonRepository personRepository){
         this.userRepository = userRepository;
         this.rolesRepository = rolesRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;

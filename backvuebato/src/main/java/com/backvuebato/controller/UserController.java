@@ -274,8 +274,8 @@ public class UserController {
     @PostMapping("generate")
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
         int amount = Integer.parseInt(data.get("amount").toString());
+        GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository, bCryptPasswordEncoder, personRepository);
         for (int i = 0; i < amount; i++) {
-            GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository, bCryptPasswordEncoder, personRepository);
             generateUsers.run();
         }
         return sortedTable(data);
