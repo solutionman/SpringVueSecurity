@@ -275,8 +275,10 @@ public class UserController {
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
         int amount = Integer.parseInt(data.get("amount").toString());
         for (int i = 0; i < amount; i++) {
+
             GenerateUsers generateUsers = new GenerateUsers();
-            generateUsers.run();
+            generateUsers.generateUsers(userRepository, rolesRepository);
+
             String userName = randomUtils.generateAlphabeticRandom("username");
             while (userRepository.findByUsername(userName) != null) {
                 userName = randomUtils.generateAlphabeticRandom("username");
