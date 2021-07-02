@@ -246,6 +246,7 @@ export default {
                 console.log(response);
                 this.persons = response.data.persons;
                 this.totalPersons = response.data.totalPersons;
+                this.selected = [];
                 this.loading = false;
             }).catch((error) => {
                 console.log(error);

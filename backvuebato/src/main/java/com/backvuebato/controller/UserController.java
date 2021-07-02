@@ -8,7 +8,7 @@ import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
 import com.backvuebato.utils.DateParseUtils;
 import com.backvuebato.utils.RandomDateUtils;
-import net.minidev.json.JSONArray;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,20 +19,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.*;
-import java.util.concurrent.ThreadLocalRandom;
 
 import static java.lang.Integer.parseInt;
 
 @RestController
-public class UserController {
+public class UserController implements Runnable {
 
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
@@ -110,7 +105,6 @@ public class UserController {
                 profile.put("email", person.getEmail());
                 Users user = userRepository.findById(person.getUserid());
                 profile.put("username", user.getUsername());
-                String debug = "";
                 List<String> userRoles = new ArrayList<>();
                 for (Roles role : user.getRoles()) {
                     userRoles.add(role.getName());
@@ -281,6 +275,7 @@ public class UserController {
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
         int amount = Integer.parseInt(data.get("amount").toString());
         for (int i = 0; i < amount; i++) {
+            run();
             String userName = generateAlphabeticRandom("username");
             while (userRepository.findByUsername(userName) != null) {
                 userName = generateAlphabeticRandom("username");
@@ -309,6 +304,17 @@ public class UserController {
         }
 
         return sortedTable(data);
+    }
+
+    @SneakyThrows
+    @Override
+    public void run() {
+        java.lang.System.out.println("Thread started");
+        String threadName = Thread.currentThread().getName();
+        long threadId = Thread.currentThread().getId();
+        java.lang.System.out.println(threadName + " " + threadId);
+//        Thread.currentThread().sleep(1000);
+        java.lang.System.out.println("Thread ended");
     }
 
     Map<String, Object> sortedTable(Map<String, Object> data) {
