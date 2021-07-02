@@ -33,8 +33,11 @@ public class GenerateUsers implements Runnable{
         long id = Thread.currentThread().getId();
         java.lang.System.out.println( "name: " + name + " id: " + id);
 
-        // TODO synchronize threads
+        doGenerate();
 
+        java.lang.System.out.println("Thread ended");
+    }
+    synchronized void doGenerate(){
         String userName = randomUtils.generateAlphabeticRandom("username");
         while (userRepository.findByUsername(userName) != null) {
             userName = randomUtils.generateAlphabeticRandom("username");
@@ -60,8 +63,5 @@ public class GenerateUsers implements Runnable{
         person.setBirthday(randomDate);
         person.setEmail(email);
         personRepository.save(person);
-
-
-        java.lang.System.out.println("Thread ended");
     }
 }
