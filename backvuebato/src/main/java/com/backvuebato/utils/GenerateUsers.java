@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import java.sql.Date;
 import java.util.Set;
 
-public class GenerateUsers implements Runnable{
+public class GenerateUsers implements Runnable {
     RandomUtils randomUtils = new RandomUtils();
     UserRepository userRepository;
     RolesRepository rolesRepository;
@@ -19,7 +19,7 @@ public class GenerateUsers implements Runnable{
     PersonRepository personRepository;
 
     public GenerateUsers(UserRepository userRepository, RolesRepository rolesRepository,
-                         BCryptPasswordEncoder bCryptPasswordEncoder, PersonRepository personRepository){
+                         BCryptPasswordEncoder bCryptPasswordEncoder, PersonRepository personRepository) {
         this.userRepository = userRepository;
         this.rolesRepository = rolesRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
@@ -28,16 +28,10 @@ public class GenerateUsers implements Runnable{
 
     @Override
     public void run() {
-        java.lang.System.out.println("Thread started");
-        String name = Thread.currentThread().getName();
-        long id = Thread.currentThread().getId();
-        java.lang.System.out.println( "name: " + name + " id: " + id);
-
         doGenerate();
-
-        java.lang.System.out.println("Thread ended");
     }
-    synchronized void doGenerate(){
+
+    synchronized void doGenerate() {
         String userName = randomUtils.generateAlphabeticRandom("username");
         while (userRepository.findByUsername(userName) != null) {
             userName = randomUtils.generateAlphabeticRandom("username");
