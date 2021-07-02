@@ -7,6 +7,7 @@ import com.backvuebato.repository.PersonRepository;
 import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
 import com.backvuebato.utils.DateParseUtils;
+import com.backvuebato.utils.GenerateUsers;
 import com.backvuebato.utils.RandomDateUtils;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ import java.util.*;
 import static java.lang.Integer.parseInt;
 
 @RestController
-public class UserController implements Runnable {
+public class UserController {
 
     private final UserRepository userRepository;
     private final PersonRepository personRepository;
@@ -275,7 +276,8 @@ public class UserController implements Runnable {
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
         int amount = Integer.parseInt(data.get("amount").toString());
         for (int i = 0; i < amount; i++) {
-            run();
+            GenerateUsers generateUsers = new GenerateUsers();
+            generateUsers.run();
             String userName = generateAlphabeticRandom("username");
             while (userRepository.findByUsername(userName) != null) {
                 userName = generateAlphabeticRandom("username");
@@ -304,17 +306,6 @@ public class UserController implements Runnable {
         }
 
         return sortedTable(data);
-    }
-
-    @SneakyThrows
-    @Override
-    public void run() {
-        java.lang.System.out.println("Thread started");
-        String threadName = Thread.currentThread().getName();
-        long threadId = Thread.currentThread().getId();
-        java.lang.System.out.println(threadName + " " + threadId);
-//        Thread.currentThread().sleep(1000);
-        java.lang.System.out.println("Thread ended");
     }
 
     Map<String, Object> sortedTable(Map<String, Object> data) {
