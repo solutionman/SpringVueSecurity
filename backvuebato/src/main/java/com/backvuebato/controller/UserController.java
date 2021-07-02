@@ -291,6 +291,7 @@ public class UserController {
             Set<Roles> roles = generateRoles();
             String pass = generateAlphaNumericRandom();
             Date randomDate = randomDateUtils.randomSqlDate();
+            String email = generateAlphabeticRandom("email");
 
             Users user = new Users();
             user.setUsername(userName);
@@ -303,14 +304,14 @@ public class UserController {
             person.setFamilyname(familyName);
             person.setMiddlename(middleName);
             person.setBirthday(randomDate);
-            // TODO set email
+            person.setEmail(email);
             personRepository.save(person);
         }
 
         return sortedTable(data);
     }
 
-    Map<String, Object> sortedTable(Map<String, Object> data){
+    Map<String, Object> sortedTable(Map<String, Object> data) {
         String sortDesc = data.get("sortDesc").toString();
         int itemsPerPage = parseInt(data.get("itemsPerPage").toString());
         String orderBy = data.get("sortBy").toString();
@@ -379,6 +380,8 @@ public class UserController {
                 .toString();
         if (target.equals("username")) {
             return rand;
+        } else if (target.equals("email")) {
+            return rand + "@mail.com";
         } else {
             return rand.substring(0, 1).toUpperCase() + rand.substring(1);
         }
