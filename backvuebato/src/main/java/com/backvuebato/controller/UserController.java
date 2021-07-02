@@ -276,8 +276,8 @@ public class UserController {
         int amount = Integer.parseInt(data.get("amount").toString());
         for (int i = 0; i < amount; i++) {
 
-            GenerateUsers generateUsers = new GenerateUsers();
-            generateUsers.generateUsers(userRepository, rolesRepository);
+            GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository);
+            generateUsers.run();
 
             String userName = randomUtils.generateAlphabeticRandom("username");
             while (userRepository.findByUsername(userName) != null) {
