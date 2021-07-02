@@ -28,10 +28,7 @@ public class GenerateUsers implements Runnable {
 
     @Override
     public void run() {
-        doGenerate();
-    }
-
-    synchronized void doGenerate() {
+        // TODO concurrency
         String userName = randomUtils.generateAlphabeticRandom("username");
         while (userRepository.findByUsername(userName) != null) {
             userName = randomUtils.generateAlphabeticRandom("username");
@@ -58,4 +55,5 @@ public class GenerateUsers implements Runnable {
         person.setEmail(email);
         personRepository.save(person);
     }
+
 }
