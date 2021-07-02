@@ -378,12 +378,13 @@ public class UserController {
                 .limit(targetStringLength)
                 .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
                 .toString();
-        if (target.equals("username")) {
-            return rand;
-        } else if (target.equals("email")) {
-            return rand + "@mail.com";
-        } else {
-            return rand.substring(0, 1).toUpperCase() + rand.substring(1);
+        switch (target) {
+            case "username":
+                return rand;
+            case "email":
+                return rand + "@mail.com";
+            default:
+                return rand.substring(0, 1).toUpperCase() + rand.substring(1);
         }
     }
 
