@@ -29,6 +29,10 @@ public class GenerateUsers implements Runnable {
     @Override
     public void run() {
         // TODO concurrency
+        long threadId = Thread.currentThread().getId();
+        String name = Thread.currentThread().getName();
+        java.lang.System.out.println("Thread started threadId " + threadId + " name " + name);
+
         String userName = randomUtils.generateAlphabeticRandom("username");
         while (userRepository.findByUsername(userName) != null) {
             userName = randomUtils.generateAlphabeticRandom("username");
@@ -54,6 +58,7 @@ public class GenerateUsers implements Runnable {
         person.setBirthday(randomDate);
         person.setEmail(email);
         personRepository.save(person);
+        java.lang.System.out.println("Thread ended threadId " + threadId + " name " + name);
     }
 
 }
