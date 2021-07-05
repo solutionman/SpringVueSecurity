@@ -8,13 +8,8 @@ import com.backvuebato.repository.RolesRepository;
 import com.backvuebato.repository.UserRepository;
 import com.backvuebato.utils.DateParseUtils;
 import com.backvuebato.utils.GenerateUsers;
-import com.backvuebato.utils.RandomUtils;
 import com.backvuebato.utils.TableUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,8 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.sql.Date;
 import java.util.*;
 
-import static java.lang.Integer.parseInt;
-
 @RestController
 public class UserController {
 
@@ -34,7 +27,6 @@ public class UserController {
     private final PersonRepository personRepository;
     private final RolesRepository rolesRepository;
     DateParseUtils dateParseUtils = new DateParseUtils();
-    RandomUtils randomUtils = new RandomUtils();
     TableUtils tableUtils;
 
     public UserController(UserRepository userRepository, PersonRepository personRepository, RolesRepository rolesRepository) {

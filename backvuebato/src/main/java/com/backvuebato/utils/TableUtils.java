@@ -51,7 +51,6 @@ public class TableUtils {
         Pageable pageable = PageRequest.of(currPage, itemsPerPage, Sort.by(sortDesc.equals("[true]") ? Sort.Direction.DESC : Sort.Direction.ASC, forPageable));
         Page<Persons> page;
         String search = null == data.get("search") ? "" : data.get("search").toString();
-//        Long personID = Long.parseLong( data.get("id").toString(), 10 );
         if (search.isEmpty()) {
             page = personRepository.findAll(pageable);
         } else {
