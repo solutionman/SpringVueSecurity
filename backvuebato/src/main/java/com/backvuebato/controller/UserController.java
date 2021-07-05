@@ -267,9 +267,16 @@ public class UserController {
     @PostMapping("generate")
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
         int amount = Integer.parseInt(data.get("amount").toString());
-        GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository, bCryptPasswordEncoder, personRepository);
+
         for (int i = 0; i < amount; i++) {
-            generateUsers.run();
+            long threadId = Thread.currentThread().getId();
+            String name = Thread.currentThread().getName();
+            java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
+            GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository, bCryptPasswordEncoder, personRepository);
+            Thread thread = new Thread(generateUsers);
+            thread.start();
+//            generateUsers.run();
+            java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
         }
         return tableUtils.sortedTable(data);
     }
