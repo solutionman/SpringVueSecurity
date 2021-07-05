@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @RestController
 public class UserController {
@@ -267,17 +269,16 @@ public class UserController {
     @PostMapping("generate")
     public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
         int amount = Integer.parseInt(data.get("amount").toString());
-
+        ExecutorService executorService = Executors.newFixedThreadPool(10);
         for (int i = 0; i < amount; i++) {
             long threadId = Thread.currentThread().getId();
             String name = Thread.currentThread().getName();
             java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
             GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository, bCryptPasswordEncoder, personRepository);
-            Thread thread = new Thread(generateUsers);
-            thread.start();
-//            generateUsers.run();
+            executorService.execute(generateUsers);
             java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
         }
+        java.lang.System.out.println("All threads finished");
         return tableUtils.sortedTable(data);
     }
 
