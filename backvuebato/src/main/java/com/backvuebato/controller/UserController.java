@@ -19,8 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Date;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 @RestController
 public class UserController {
@@ -267,16 +269,22 @@ public class UserController {
     }
 
     @PostMapping("generate")
-    public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) {
+    public Map<String, Object> generateUsers(@RequestBody Map<String, Object> data) throws ExecutionException, InterruptedException {
         int amount = Integer.parseInt(data.get("amount").toString());
         ExecutorService executorService = Executors.newFixedThreadPool(10);
+        List<Future<?>> futures = new ArrayList<>();
         for (int i = 0; i < amount; i++) {
             long threadId = Thread.currentThread().getId();
             String name = Thread.currentThread().getName();
             java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
             GenerateUsers generateUsers = new GenerateUsers(userRepository, rolesRepository, bCryptPasswordEncoder, personRepository);
-            executorService.execute(generateUsers);
+//            executorService.execute(generateUsers);
+            Future<?> f = executorService.submit(generateUsers);
+            futures.add(f);
             java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
+        }
+        for(Future<?> future : futures){
+            future.get();
         }
         java.lang.System.out.println("All threads finished");
         return tableUtils.sortedTable(data);
