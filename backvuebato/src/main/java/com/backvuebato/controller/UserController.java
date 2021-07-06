@@ -254,13 +254,13 @@ public class UserController {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
-        Users currentUser = userRepository.findByUsername(name);
+        int currentUserId = userRepository.findByUsername(name).getId();
         try {
             List<Object> list = (List<Object>) data.get("selected");
             for (Object obj : list) {
                 Map<String, Object> val = (Map<String, Object>) obj;
                 Integer id = (Integer) val.get("id");
-                if (currentUser.getId() == id) {
+                if (currentUserId == id) {
                     java.lang.System.out.println("Can't delete current user");
                     continue;
                 }
