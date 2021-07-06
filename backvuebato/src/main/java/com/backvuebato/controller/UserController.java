@@ -284,8 +284,12 @@ public class UserController {
             java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
         }
         for(Future<?> future : futures){
-            future.get();
+            future.get();  // waiting for all threads to complete before go further
         }
+//        boolean allDone = true;
+//        for(Future<?> future : futures){
+//            allDone &= future.isDone(); // this way we will not wait for all threads to complete
+//        }
         java.lang.System.out.println("All threads finished");
         return tableUtils.sortedTable(data);
     }
