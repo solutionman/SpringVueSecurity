@@ -37,7 +37,7 @@ public class UserController {
         this.userRepository = userRepository;
         this.personRepository = personRepository;
         this.rolesRepository = rolesRepository;
-        tableUtils =  new TableUtils(personRepository, userRepository);
+        tableUtils = new TableUtils(personRepository, userRepository);
     }
 
     @Autowired
@@ -252,11 +252,18 @@ public class UserController {
     @PostMapping(value = "delete")
     public Map<String, Object> deletePersons(@RequestBody Map<String, Object> data) {
 
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String name = authentication.getName();
+        Users currentUser = userRepository.findByUsername(name);
         try {
             List<Object> list = (List<Object>) data.get("selected");
             for (Object obj : list) {
                 Map<String, Object> val = (Map<String, Object>) obj;
                 Integer id = (Integer) val.get("id");
+                if (currentUser.getId() == id) {
+                    java.lang.System.out.println("Can't delete current user");
+                    continue;
+                }
                 personRepository.deleteById(id);
                 Users user = userRepository.findByUsername(val.get("name").toString());
                 userRepository.deleteById(user.getId());
@@ -283,7 +290,7 @@ public class UserController {
             futures.add(f);
             java.lang.System.out.println("Main thread  threadId " + threadId + " name " + name);
         }
-        for(Future<?> future : futures){
+        for (Future<?> future : futures) {
             future.get();  // waiting for all threads to complete before go further
         }
 //        boolean allDone = true;
