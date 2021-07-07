@@ -121,6 +121,39 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <v-dialog
+            v-model="deleteAlert"
+            transition="dialog-top-transition"
+            max-width="600"
+        >
+            <template v-slot:activator="{ on, attrs }">
+<!--                <v-btn-->
+<!--                    color="primary"-->
+<!--                    v-bind="attrs"-->
+<!--                    v-on="on"-->
+<!--                >From the top-->
+<!--                </v-btn>-->
+            </template>
+            <template v-slot:default="dialog">
+                <v-card>
+                    <v-toolbar
+                        color="primary"
+                        dark
+                    >Delete user alert
+                    </v-toolbar>
+                    <v-card-text>
+                        <div class="text-h2 pa-12">You can't delete yourself!</div>
+                    </v-card-text>
+                    <v-card-actions class="justify-end">
+                        <v-btn
+                            text
+                            @click="deleteAlert = false"
+                        >Close
+                        </v-btn>
+                    </v-card-actions>
+                </v-card>
+            </template>
+        </v-dialog>
     </v-card>
 </template>
 <script>
@@ -154,6 +187,7 @@ export default {
             search: '',
             amount: 0,
             dialog: false,
+            deleteAlert: false,
             footerProps: {'items-per-page-options': [5, 10, 15, 30, 50, 100]},
             rules: {
                 required: value => !!value || 'Required.',
@@ -248,6 +282,10 @@ export default {
                 this.totalPersons = response.data.totalPersons;
                 this.selected = [];
                 this.loading = false;
+                if (null != response.data.selfdelete) {
+                    console.log(response.data.selfdelete);
+                    this.deleteAlert = true;
+                }
             }).catch((error) => {
                 console.log(error);
             })

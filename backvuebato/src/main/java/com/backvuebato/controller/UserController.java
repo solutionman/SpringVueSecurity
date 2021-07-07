@@ -255,6 +255,7 @@ public class UserController {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String name = authentication.getName();
         int currentUserId = userRepository.findByUsername(name).getId();
+        boolean selfDeleteAttempt = false;
         try {
             List<Object> list = (List<Object>) data.get("selected");
             for (Object obj : list) {
@@ -262,6 +263,7 @@ public class UserController {
                 Integer id = (Integer) val.get("id");
                 if (currentUserId == id) {
                     java.lang.System.out.println("Can't delete current user");
+                    selfDeleteAttempt = true;
                     continue;
                 }
                 personRepository.deleteById(id);
@@ -271,7 +273,11 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        if(selfDeleteAttempt){
+            Map<String, Object> result = tableUtils.sortedTable(data);
+            result.put("selfdelete", true);
+            return result;
+        }
         return tableUtils.sortedTable(data);
     }
 
