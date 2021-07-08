@@ -279,6 +279,7 @@ export default {
                     this.birthday = response.data.birthday;
                     this.email = response.data.email;
                     if(null != response.data.errors){
+                        // TODO show modal with errors
                         console.log(response.data.errors);
                     }
                 }).catch((error) => {

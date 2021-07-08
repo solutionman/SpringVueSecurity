@@ -151,7 +151,7 @@ public class UserController {
             String newUserName = formValues.get("username").toString();
             List<String> errors = new ArrayList<>();
             if (userRepository.findByUsername(newUserName) == null) {
-                userToEdit.setUsername(formValues.get("username").toString());
+                userToEdit.setUsername(newUserName);
             } else {
                 formValues.put("username", userToEdit.getUsername());
                 errors.add("username " + newUserName + " already taken");
