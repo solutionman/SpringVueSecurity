@@ -151,6 +151,40 @@
                     </v-card>
                 </v-dialog>
 
+                <v-dialog
+                    v-model="editAlert"
+                    transition="dialog-top-transition"
+                    max-width="600"
+                >
+                    <template v-slot:activator="{ on, attrs }">
+                        <!--                <v-btn-->
+                        <!--                    color="primary"-->
+                        <!--                    v-bind="attrs"-->
+                        <!--                    v-on="on"-->
+                        <!--                >From the top-->
+                        <!--                </v-btn>-->
+                    </template>
+                    <template v-slot:default="dialog">
+                        <v-card>
+                            <v-toolbar
+                                color="primary"
+                                dark
+                            >Edit user alert
+                            </v-toolbar>
+                            <v-card-text>
+                                <div class="text-h2 pa-12"> username already taken </div>
+                            </v-card-text>
+                            <v-card-actions class="justify-end">
+                                <v-btn
+                                    text
+                                    @click="editAlert = false"
+                                >Close
+                                </v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </template>
+                </v-dialog>
+
             </v-flex>
 
             <v-flex
@@ -216,6 +250,8 @@ export default {
                 min: v => v.length >= 8 || 'Min 8 characters',
                 emailMatch: () => (`The email and password you entered don't match`),
             },
+            editAlert: false,
+            errors: '',
         }
     },
     mounted() {
@@ -281,6 +317,7 @@ export default {
                     if(null != response.data.errors){
                         // TODO show modal with errors
                         console.log(response.data.errors);
+                        this.editAlert = true;
                     }
                 }).catch((error) => {
                     console.log(error);
