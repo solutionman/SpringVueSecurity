@@ -148,7 +148,13 @@ public class UserController {
             persToEdit.setBirthday(dateParseUtils.stringToSqlDate(formValues.get("birthday").toString()));
             persToEdit.setEmail(formValues.get("email").toString());
             Users userToEdit = userRepository.findById(persToEdit.getUserid());
-            userToEdit.setUsername(formValues.get("username").toString());
+            String newUserName = formValues.get("username").toString();
+            if (userRepository.findByUsername(newUserName) == null) {
+                userToEdit.setUsername(formValues.get("username").toString());
+            } else {
+                formValues.put("username", userToEdit.getUsername());
+                formValues.put("usernameError", newUserName + " already taken");
+            }
             List<String> roles = (List<String>) formValues.get("roles");
             Set<Roles> rolesToSet = new HashSet<>();
             for (String role : roles) {
@@ -273,7 +279,7 @@ public class UserController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(selfDeleteAttempt){
+        if (selfDeleteAttempt) {
             Map<String, Object> result = tableUtils.sortedTable(data);
             result.put("selfdelete", true);
             return result;
