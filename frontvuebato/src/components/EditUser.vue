@@ -111,7 +111,7 @@
                                 <v-row>
                                     <v-col cols="12">
                                         <v-text-field
-                                            v-model = "pass"
+                                            v-model="pass"
                                             :rules="[rules.required, rules.min]"
                                             label="New Password*"
                                             hint="At least 8 characters"
@@ -120,7 +120,7 @@
                                     </v-col>
                                     <v-col cols="12">
                                         <v-text-field
-                                            v-model = "pass_confirm"
+                                            v-model="pass_confirm"
                                             :rules="[rules.required, rules.min]"
                                             label="Confirm New Password*"
                                             hint="At least 8 characters"
@@ -171,9 +171,9 @@
                                 dark
                             >Edit user alert
                             </v-toolbar>
-                            <v-card-text>
-                                <div class="text-h2 pa-12"> username already taken </div>
-                            </v-card-text>
+                            <v-text-field
+                                v-model="errorsFromBackend"
+                            ></v-text-field>
                             <v-card-actions class="justify-end">
                                 <v-btn
                                     text
@@ -251,7 +251,7 @@ export default {
                 emailMatch: () => (`The email and password you entered don't match`),
             },
             editAlert: false,
-            errors: '',
+            errorsFromBackend: '',
         }
     },
     mounted() {
@@ -297,7 +297,7 @@ export default {
                 let person = this.$route.params;
                 // If on the moment of editing user no user in route.params, for now just return back
                 if (Object.keys(person).length === 0 && person.constructor === Object) {
-                  router.push({name: 'Persons'});
+                    router.push({name: 'Persons'});
                 }
                 formValues["person"] = person;
                 this.$axios({
@@ -314,9 +314,9 @@ export default {
                     this.middle_name = response.data.middle_name;
                     this.birthday = response.data.birthday;
                     this.email = response.data.email;
-                    if(null != response.data.errors){
-                        // TODO show modal with errors
+                    if (null != response.data.errors) {
                         console.log(response.data.errors);
+                        this.errorsFromBackend = response.data.errors;
                         this.editAlert = true;
                     }
                 }).catch((error) => {
@@ -347,7 +347,7 @@ export default {
             })
         },
         changePass() {
-            if( this.pass === '' || this.pass !== this.pass_confirm){
+            if (this.pass === '' || this.pass !== this.pass_confirm) {
                 console.log('Password and Confirm Password should match ')
                 return;
             }
@@ -374,7 +374,7 @@ export default {
             this.pass = '';
             this.pass_confirm = '';
         },
-        closeChangePass(){
+        closeChangePass() {
             this.dialog = false;
             this.pass = '';
             this.pass_confirm = '';
