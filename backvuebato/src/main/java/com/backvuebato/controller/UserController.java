@@ -149,11 +149,13 @@ public class UserController {
             persToEdit.setEmail(formValues.get("email").toString());
             Users userToEdit = userRepository.findById(persToEdit.getUserid());
             String newUserName = formValues.get("username").toString();
+            List<String> errors = new ArrayList<>();
             if (userRepository.findByUsername(newUserName) == null) {
                 userToEdit.setUsername(formValues.get("username").toString());
             } else {
                 formValues.put("username", userToEdit.getUsername());
-                formValues.put("usernameError", newUserName + " already taken");
+                errors.add("username " + newUserName + " already taken");
+                formValues.put("errors", errors);
             }
             List<String> roles = (List<String>) formValues.get("roles");
             Set<Roles> rolesToSet = new HashSet<>();

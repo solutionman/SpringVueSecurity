@@ -278,6 +278,9 @@ export default {
                     this.middle_name = response.data.middle_name;
                     this.birthday = response.data.birthday;
                     this.email = response.data.email;
+                    if(null != response.data.errors){
+                        console.log(response.data.errors);
+                    }
                 }).catch((error) => {
                     console.log(error);
                 })
