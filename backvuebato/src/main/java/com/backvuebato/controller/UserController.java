@@ -50,6 +50,7 @@ public class UserController {
         Users user = userRepository.findByUsername(name);
         Persons person = personRepository.findByUserid(user.getId());
         Map<String, Object> profile = new HashMap<>();
+        profile.put("username", user.getUsername());
         profile.put("first_name", person.getFirstname());
         profile.put("second_name", person.getFamilyname());
         profile.put("middle_name", person.getMiddlename());
@@ -67,6 +68,10 @@ public class UserController {
         Users user = userRepository.findByUsername(name);
         Persons person = personRepository.findByUserid(user.getId());
 
+        if (userRepository.findByUsername(formValues.get("username").toString()) == null) {
+            user.setUsername(formValues.get("username").toString());
+        }
+
         person.setFirstname(formValues.get("first_name").toString());
         person.setFamilyname(formValues.get("second_name").toString());
         person.setMiddlename(formValues.get("middle_name").toString());
@@ -78,6 +83,7 @@ public class UserController {
         personRepository.save(person);
 
         Map<String, Object> profile = new HashMap<>();
+        profile.put("username", user.getUsername());
         profile.put("first_name", person.getFirstname());
         profile.put("second_name", person.getFamilyname());
         profile.put("middle_name", person.getMiddlename());

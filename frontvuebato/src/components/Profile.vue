@@ -14,6 +14,15 @@
 
                 <ValidationObserver ref="observer" v-slot="{ validate, reset }">
                     <form>
+                        <ValidationProvider v-slot="{ errors }" name="Username" rules="required|min:1|max:30">
+                            <v-text-field
+                                v-model="username"
+                                :counter="30"
+                                :error-messages="errors"
+                                label="Username"
+                                required
+                            ></v-text-field>
+                        </ValidationProvider>
                         <ValidationProvider v-slot="{ errors }" name="Имя" rules="required|min:1|max:30">
                             <v-text-field
                                 v-model="first_name"
@@ -109,6 +118,7 @@ export default {
     },
     data() {
         return {
+            username: '',
             first_name: '',
             second_name: '',
             middle_name: '',
@@ -124,6 +134,7 @@ export default {
             url: this.$api_url + 'profile',
         }).then(response => {
             // console.log( response );
+            this.username = response.data.username;
             this.first_name = response.data.first_name;
             this.second_name = response.data.second_name;
             this.middle_name = response.data.middle_name;
@@ -139,6 +150,7 @@ export default {
             // console.log(isValid);
             if (isValid) {
                 let formValues = {};
+                formValues["username"] = this.username;
                 formValues["first_name"] = this.first_name;
                 formValues["second_name"] = this.second_name;
                 formValues["middle_name"] = this.middle_name;
@@ -151,6 +163,7 @@ export default {
                     data: formValues
                 }).then(response => {
                     // console.log(response);
+                    this.username = response.data.username;
                     this.first_name = response.data.first_name;
                     this.second_name = response.data.second_name;
                     this.middle_name = response.data.middle_name;
@@ -167,6 +180,7 @@ export default {
                 url: this.$api_url + 'profile'
             }).then(response => {
                 // console.log( response );
+                this.username = response.data.username;
                 this.first_name = response.data.first_name;
                 this.second_name = response.data.second_name;
                 this.middle_name = response.data.middle_name;
