@@ -68,8 +68,10 @@ public class UserController {
         Users user = userRepository.findByUsername(name);
         Persons person = personRepository.findByUserid(user.getId());
 
+        boolean changedUserName = false;
         if (userRepository.findByUsername(formValues.get("username").toString()) == null) {
             user.setUsername(formValues.get("username").toString());
+            changedUserName = true;
         }
 
         person.setFirstname(formValues.get("first_name").toString());
@@ -89,6 +91,9 @@ public class UserController {
         profile.put("middle_name", person.getMiddlename());
         profile.put("birthday", person.getBirthday());
         profile.put("email", person.getEmail());
+        if (changedUserName) {
+            profile.put("changedUserName", true);
+        }
 
         return profile;
     }

@@ -89,6 +89,7 @@
 <script>
 import {required, email, max, min} from 'vee-validate/dist/rules'
 import {extend, ValidationObserver, ValidationProvider, setInteractionMode} from 'vee-validate'
+import router from "@/router";
 
 setInteractionMode('eager')
 
@@ -169,6 +170,9 @@ export default {
                     this.middle_name = response.data.middle_name;
                     this.birthday = response.data.birthday == null ? 'Нет даты' : this.$moment(response.data.birthday).locale('ru').format('DD MMMM YYYY');
                     this.email = response.data.email;
+                    if (null != response.data.changedUserName) {
+                        this.$store.dispatch('userSignOut');
+                    }
                 }).catch((error) => {
                     console.log(error);
                 })
