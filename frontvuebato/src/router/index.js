@@ -5,6 +5,7 @@ import NotFound from '../components/NotFound.vue';
 import SignIn from '../components/SignIn.vue';
 import Profile from "@/components/Profile";
 import Persons from "@/components/Persons";
+import Files from "@/components/Files"
 import NewUser from "@/components/NewUser";
 import Maps from "@/components/Maps";
 import EditUser from "../components/EditUser";
@@ -49,6 +50,11 @@ const router = new Router({
             path: '/frontvuebato/persons',
             name: 'Persons',
             component: Persons,
+        },
+        {
+            path: '/frontvuebato/files',
+            name: 'Files',
+            component: Files,
         },
         {
             path: '/frontvuebato/signIn',
