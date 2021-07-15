@@ -40,6 +40,8 @@ public class FilesController {
             java.lang.System.out.println("Exception while saving file " + e.getMessage());
         }
 
+        Files check = filesRepository.findById(files.getId());
+        String debug = "";
 
         return new HashMap<>();
     }
