@@ -125,7 +125,7 @@
                     class="mr-2"
                     @click="editItem(item)"
                 >
-                    mdi-pencil
+                    mdi-download
                 </v-icon>
                 <v-icon
                     small
