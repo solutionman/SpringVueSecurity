@@ -12,7 +12,11 @@
         <v-data-table
             :headers="headers"
             :items="files"
-            sort-by="whoAdded"
+            :options.sync="options"
+            :sort-by.sync="sortBy"
+            :server-items-length="totalFiles"
+            :loading="loading"
+            sort-by="whoInserted"
             class="elevation-1"
         >
             <template v-slot:top>
@@ -65,7 +69,7 @@
                                             md="4"
                                         >
                                             <v-text-field
-                                                v-model="editedItem.whoAdded"
+                                                v-model="editedItem.whoInserted"
                                                 label="Who added"
                                             ></v-text-field>
                                         </v-col>
@@ -153,21 +157,25 @@ export default {
                 align: 'start',
                 value: 'name',
             },
-            {text: 'Who added', value: 'whoAdded'},
-            {text: 'Date', value: 'date'},
+            {text: 'Who added', value: 'whoInserted'},
+            {text: 'Date', value: 'insertDate'},
             {text: 'Actions', value: 'actions', sortable: false},
         ],
         files: [],
+        totalFiles: 0,
+        loading: true,
+        options: {},
+        sortBy: 'id',
         editedIndex: -1,
         editedItem: {
             name: '',
-            whoAdded: 0,
-            date: 0,
+            whoInserted: 0,
+            insertDate: 0,
         },
         defaultItem: {
             name: '',
-            whoAdded: 0,
-            date: 0,
+            whoInserted: 0,
+            insertDate: 0,
         },
     }),
     // data() {
@@ -188,12 +196,31 @@ export default {
         dialogDelete(val) {
             val || this.closeDelete()
         },
+      options: {
+        handler() {
+          this.loading = true;
+          let options = {};
+          options["sortBy"] = this.options.sortBy;
+          options["sortDesc"] = this.options.sortDesc;
+          options["page"] = this.options.page;
+          options["itemsPerPage"] = this.options.itemsPerPage;
+          options["search"] = this.search;
+          this.$axios({
+            method: 'post',
+            url: this.$api_url + 'getFiles',
+            data: options
+          }).then(response => {
+            console.log(response);
+            this.files = response.data.files;
+            this.totalFiles = response.data.totalFiles;
+            this.loading = false;
+          }).catch((error) => {
+            console.log(error);
+          })
+        },
+        deep: true
+      },
     },
-
-    created() {
-        this.initialize()
-    },
-
     methods: {
         submit() {
             console.log(this.file);
@@ -210,31 +237,6 @@ export default {
                 console.log(error);
             })
         },
-        initialize() {
-            this.files = [
-                {
-                    name: 'map',
-                    whoAdded: 'Superman',
-                    date: '2021-04-07',
-                },
-                {
-                    name: 'time machine',
-                    whoAdded: 'Terminator',
-                    date: '2014-01-01',
-                },
-                {
-                    name: 'links',
-                    whoAdded: 'Spiderman',
-                    date: '1997-05-12',
-                },
-                {
-                    name: 'details',
-                    whoAdded: 'Robocop',
-                    date: '1997-10-15',
-                },
-            ]
-        },
-
         editItem(item) {
             this.editedIndex = this.files.indexOf(item)
             this.editedItem = Object.assign({}, item)

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -44,5 +46,18 @@ public class FilesController {
         String debug = "";
 
         return new HashMap<>();
+    }
+
+    @PostMapping("getFiles")
+    public Map<String, Object> getFiles(){
+
+        List<Files> files = new ArrayList<>();
+        files.add(filesRepository.findById(1));
+        files.add(filesRepository.findById(2));
+        files.add(filesRepository.findById(3));
+        Map<String, Object> result = new HashMap<>();
+        result.put("files", files);
+        result.put("totalFiles", 1);
+        return result;
     }
 }
