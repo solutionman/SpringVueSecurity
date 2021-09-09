@@ -262,10 +262,10 @@ export default {
                 data: data
             }).then(response => {
                 console.log(response);
-                this.files.splice(this.editedIndex, 1);
             }).catch((error) => {
                 console.log(error);
             })
+            this.files.splice(this.editedIndex, 1);
             this.closeDelete()
         },
 

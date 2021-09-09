@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -57,7 +54,15 @@ public class FilesController {
 
     @PostMapping("deleteFile")
     public Map<String, Object> deleteFile(@RequestBody Map<String, Object> data){
-        String debug = "";
+        Object file =  data.get("file");
+        try{
+            Map<String, Object> toDelete = (Map<String, Object>) file;
+            String strId = toDelete.get("id").toString();
+            int id = Integer.parseInt(strId);
+            filesRepository.deleteById(id);
+        }catch (Exception e){
+            java.lang.System.out.println("Error while deleting file");
+        }
         return new HashMap<>();
     }
 
