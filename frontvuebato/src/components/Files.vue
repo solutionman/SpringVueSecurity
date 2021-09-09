@@ -166,6 +166,7 @@ export default {
         loading: true,
         options: {},
         sortBy: 'id',
+        fileToDelete: [],
         editedIndex: -1,
         editedItem: {
             name: '',
@@ -244,13 +245,27 @@ export default {
         },
 
         deleteItem(item) {
+            this.fileToDelete = item;
             this.editedIndex = this.files.indexOf(item)
             this.editedItem = Object.assign({}, item)
             this.dialogDelete = true
         },
 
         deleteItemConfirm() {
-            this.files.splice(this.editedIndex, 1)
+            console.log(this.fileToDelete);
+            let data = {};
+            data["file"] = this.fileToDelete;
+            this.$axios({
+                method: 'post',
+                url: this.$api_url + 'deleteFile',
+                // headers: {},
+                data: data
+            }).then(response => {
+                console.log(response);
+                this.files.splice(this.editedIndex, 1);
+            }).catch((error) => {
+                console.log(error);
+            })
             this.closeDelete()
         },
 

@@ -1,7 +1,6 @@
 package com.backvuebato.controller;
 
 import com.backvuebato.entity.Files;
-import com.backvuebato.entity.Persons;
 import com.backvuebato.entity.Users;
 import com.backvuebato.repository.FilesRepository;
 import com.backvuebato.repository.UserRepository;
@@ -53,6 +52,12 @@ public class FilesController {
         Files check = filesRepository.findById(files.getId());
         String debug = "";
 
+        return new HashMap<>();
+    }
+
+    @PostMapping("deleteFile")
+    public Map<String, Object> deleteFile(@RequestBody Map<String, Object> data){
+        String debug = "";
         return new HashMap<>();
     }
 
