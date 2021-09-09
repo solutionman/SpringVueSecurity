@@ -122,6 +122,10 @@
                 </v-toolbar>
             </template>
             <template v-slot:item.actions="{ item }">
+                <button
+                @click="downloadFile(item)">
+                    Download
+                </button>
                 <v-icon
                     small
                     class="mr-2"
@@ -295,6 +299,25 @@ export default {
                 this.files.push(this.editedItem)
             }
             this.close()
+        },
+        downloadFile(item) {
+            let data = {};
+            data["file"] = item;
+            this.$axios({
+                url: this.$api_url + 'downloadFile',
+                method: 'post',
+                responseType: 'blob',
+                data: data
+            }).then((response) => {
+                var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                var fileLink = document.createElement('a');
+
+                fileLink.href = fileURL;
+                fileLink.setAttribute('download', item.name);
+                document.body.appendChild(fileLink);
+
+                fileLink.click();
+            });
         },
         onClick() {
             let data = {};

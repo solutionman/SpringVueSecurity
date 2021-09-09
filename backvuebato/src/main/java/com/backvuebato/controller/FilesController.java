@@ -49,13 +49,11 @@ public class FilesController {
         return new HashMap<>();
     }
 
-    @GetMapping("downloadFile")
-    public byte[] downloadFile() {
-
-        Files check = filesRepository.findById(8);
-        String debug = "";
-
-        return check.getData();
+    @PostMapping("downloadFile")
+    public byte[] downloadFile(@RequestBody Map<String, Object> data) {
+        Map<String, Object> formFile = (Map<String, Object>) data.get("file");
+        Files file = filesRepository.findById(Integer.parseInt(formFile.get("id").toString()));
+        return file.getData();
     }
 
     @PostMapping("deleteFile")
