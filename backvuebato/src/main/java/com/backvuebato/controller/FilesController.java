@@ -1,8 +1,14 @@
 package com.backvuebato.controller;
 
 import com.backvuebato.entity.Files;
+import com.backvuebato.entity.Persons;
+import com.backvuebato.entity.Users;
 import com.backvuebato.repository.FilesRepository;
 import com.backvuebato.repository.UserRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static java.lang.Integer.parseInt;
 
 @RestController
 public class FilesController {
@@ -50,14 +58,50 @@ public class FilesController {
 
     @PostMapping("getFiles")
     public Map<String, Object> getFiles(@RequestBody Map<String, Object> data){
+        String sortDesc = data.get("sortDesc").toString();
+        int itemsPerPage = parseInt(data.get("itemsPerPage").toString());
+        String orderBy = data.get("sortBy").toString();
+        String forPageable;
+        switch (orderBy) {
+            case "[name]":
+                forPageable = "name";
+                break;
+            case "[whoInserted]":
+                forPageable = "whoInserted";
+                break;
+            case "[insertDate]":
+                forPageable = "insertDate";
+                break;
+            default:
+                forPageable = "id";
+        }
+        int currPage = parseInt(data.get("page").toString()) - 1;
+        Pageable pageable = PageRequest.of(currPage, itemsPerPage, Sort.by(sortDesc.equals("[true]") ? Sort.Direction.DESC : Sort.Direction.ASC, forPageable));
+        Page<Files> page;
+        String search = null == data.get("search") ? "" : data.get("search").toString();
+        if (search.isEmpty()) {
+            page = filesRepository.findAll(pageable);
+        } else {
+            // TODO search
+            page = filesRepository.findAll(pageable);
+        }
+        List<Files> filesList = page.getContent();
 
-        List<Files> files = new ArrayList<>();
-        files.add(filesRepository.findById(1));
-        files.add(filesRepository.findById(2));
-        files.add(filesRepository.findById(3));
-        Map<String, Object> result = new HashMap<>();
-        result.put("files", files);
-        result.put("totalFiles", 1);
-        return result;
+        List<Map<String, Object>> filesToDisplay = new ArrayList<>();
+        for (Files file : filesList) {
+            Map<String, Object> currentFile = new HashMap<>();
+
+            currentFile.put("id", file.getId());
+            currentFile.put("name", file.getName());
+            currentFile.put("insertDate", file.getInsertDate());
+            Users user = userRepository.findById(file.getWhoInserted());
+            currentFile.put("whoInserted", user.getUsername());
+            filesToDisplay.add(currentFile);
+        }
+        long totalFiles = page.getTotalElements();
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("files", filesToDisplay);
+        resultMap.put("totalFiles", totalFiles);
+        return resultMap;
     }
 }
