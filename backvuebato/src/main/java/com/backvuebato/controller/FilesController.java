@@ -49,7 +49,7 @@ public class FilesController {
     }
 
     @PostMapping("getFiles")
-    public Map<String, Object> getFiles(){
+    public Map<String, Object> getFiles(@RequestBody Map<String, Object> data){
 
         List<Files> files = new ArrayList<>();
         files.add(filesRepository.findById(1));
