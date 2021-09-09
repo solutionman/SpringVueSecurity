@@ -9,6 +9,8 @@
             <v-btn class="mr-4" @click="submit">Save</v-btn>
         </form>
 
+        <button @click="onClick()">DownLoad</button>
+
         <v-data-table
             :headers="headers"
             :items="files"
@@ -167,6 +169,7 @@ export default {
         options: {},
         sortBy: 'id',
         fileToDelete: [],
+        fileToDownload: [],
         editedIndex: -1,
         editedItem: {
             name: '',
@@ -293,6 +296,25 @@ export default {
             }
             this.close()
         },
+        onClick() {
+            let data = {};
+            data["file"] = this.fileToDownload;
+            this.$axios({
+                url: this.$api_url + 'downloadFile',
+                method: 'GET',
+                responseType: 'blob',
+                data: data
+            }).then((response) => {
+                var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                var fileLink = document.createElement('a');
+
+                fileLink.href = fileURL;
+                fileLink.setAttribute('download', 'file.png');
+                document.body.appendChild(fileLink);
+
+                fileLink.click();
+            });
+        }
     }
 }
 </script>
