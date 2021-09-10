@@ -245,6 +245,25 @@ export default {
                 data: formData
             }).then(response => {
                 console.log(response);
+                this.loading = true;
+                let options = {};
+                options["sortBy"] = this.options.sortBy;
+                options["sortDesc"] = this.options.sortDesc;
+                options["page"] = this.options.page;
+                options["itemsPerPage"] = this.options.itemsPerPage;
+                options["search"] = this.search;
+                this.$axios({
+                    method: 'post',
+                    url: this.$api_url + 'getFiles',
+                    data: options
+                }).then(response2 => {
+                    console.log(response2);
+                    this.files = response2.data.files;
+                    this.totalFiles = response2.data.totalFiles;
+                    this.loading = false;
+                }).catch((error2) => {
+                    console.log(error2);
+                })
             }).catch((error) => {
                 console.log(error);
             })
