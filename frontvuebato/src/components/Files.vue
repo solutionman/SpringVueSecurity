@@ -245,6 +245,7 @@ export default {
                 data: formData
             }).then(response => {
                 console.log(response);
+                this.file = null;
                 this.loading = true;
                 let options = {};
                 options["sortBy"] = this.options.sortBy;
