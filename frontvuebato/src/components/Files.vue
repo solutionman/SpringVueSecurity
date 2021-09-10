@@ -6,7 +6,13 @@
                 show-size
                 label="File input"
             ></v-file-input>
-            <v-btn class="mr-4" @click="submit">Save</v-btn>
+            <v-btn
+                color="primary"
+                dark
+                class="mb-2"
+                @click="submit">
+                    Save
+            </v-btn>
         </form>
 
         <v-data-table
