@@ -17,6 +17,7 @@ npm install
 npm run serve
 
 localhost:8081/frontvuebato/
+localhost:8081/frontvuebato/home
 
 run with tomcat:
 
