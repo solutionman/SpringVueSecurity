@@ -17,11 +17,11 @@ import java.util.Map;
 import static java.lang.Integer.parseInt;
 
 public class TableUtils {
-    private PersonRepository personRepository;
-    private UserRepository userRepository;
-    private DateParseUtils dateParseUtils = new DateParseUtils();
+    private final PersonRepository personRepository;
+    private final UserRepository userRepository;
+    private final DateParseUtils dateParseUtils = new DateParseUtils();
 
-    public TableUtils(PersonRepository personRepository, UserRepository userRepository){
+    public TableUtils(PersonRepository personRepository, UserRepository userRepository) {
         this.personRepository = personRepository;
         this.userRepository = userRepository;
     }
@@ -31,22 +31,33 @@ public class TableUtils {
         int itemsPerPage = parseInt(data.get("itemsPerPage").toString());
         String orderBy = data.get("sortBy").toString();
         String forPageable;
-        switch (orderBy) {
-            case "[familyname]":
-                forPageable = "familyname";
-                break;
-            case "[firstname]":
-                forPageable = "firstname";
-                break;
-            case "[middlename]":
-                forPageable = "middlename";
-                break;
-            case "[birthday]":
-                forPageable = "birthday";
-                break;
-            default:
-                forPageable = "id";
+        Map<String, String> fieldsMapping = new HashMap<>();
+        fieldsMapping.put("[familyname]", "familyname");
+        fieldsMapping.put("[firstname]", "firstname");
+        fieldsMapping.put("[middlename]", "middlename");
+        fieldsMapping.put("[birthday]", "birthday");
+        if (fieldsMapping.containsKey(orderBy)) {
+            forPageable = fieldsMapping.get(orderBy);
+        } else {
+            forPageable = "id";
         }
+//
+//        switch (orderBy) {
+//            case "[familyname]":
+//                forPageable = "familyname";
+//                break;
+//            case "[firstname]":
+//                forPageable = "firstname";
+//                break;
+//            case "[middlename]":
+//                forPageable = "middlename";
+//                break;
+//            case "[birthday]":
+//                forPageable = "birthday";
+//                break;
+//            default:
+//                forPageable = "id";
+//        }
         int currPage = parseInt(data.get("page").toString()) - 1;
         Pageable pageable = PageRequest.of(currPage, itemsPerPage, Sort.by(sortDesc.equals("[true]") ? Sort.Direction.DESC : Sort.Direction.ASC, forPageable));
         Page<Persons> page;
