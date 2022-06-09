@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 public class DateParseUtils {
-    public Date stringToSqlDate(Object date){
+    public Date stringToSqlDate(Object date) {
         try {
             String dateToString = date.toString();
             // YYYY-MM-DD
