@@ -12,17 +12,18 @@ import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class RandomUtils {
-    public Date randomSqlDate(){
+    public Date randomSqlDate() {
         String date1 = "01/01/1960";
         String date2 = "01/01/2020";
-        try{
+        try {
             java.util.Date d1 = new SimpleDateFormat("dd/MM/yyyy").parse(date1);
             java.util.Date d2 = new SimpleDateFormat("dd/MM/yyyy").parse(date2);
             return new Date(ThreadLocalRandom.current().nextLong(d1.getTime(), d2.getTime()));
-        } catch (Exception e){
+        } catch (Exception e) {
             return null;
         }
     }
+
     public String generateAlphabeticRandom(String target) {
         int leftLimit = 97; // letter 'a'
         int rightLimit = 122; // letter 'z'
