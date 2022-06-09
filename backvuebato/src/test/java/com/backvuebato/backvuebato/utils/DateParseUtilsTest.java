@@ -22,4 +22,12 @@ class DateParseUtilsTest {
         Date formatted2 = dateParseUtils.stringToSqlDate(date2);
         Assertions.assertEquals(date, formatted2.toString());
     }
+
+    @DisplayName("Testing sql to String")
+    @Test
+    void sqlDateToStringTest(){
+        Date date = Date.valueOf("1999-01-01");
+        String formatted = dateParseUtils.sqlDateToString(date);
+        Assertions.assertEquals("01 января 1999", formatted);
+    }
 }
