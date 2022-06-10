@@ -21,6 +21,10 @@ class DateParseUtilsTest {
         String date2 = "01 января 2000";
         Date formatted2 = dateParseUtils.stringToSqlDate(date2);
         Assertions.assertEquals(date, formatted2.toString());
+
+        String oneDigit = "1 января 2000";
+        Date formattedOnDigit = dateParseUtils.stringToSqlDate(oneDigit);
+        Assertions.assertEquals("2000-01-01", formattedOnDigit.toString());
     }
 
     @DisplayName("Testing sql to String")

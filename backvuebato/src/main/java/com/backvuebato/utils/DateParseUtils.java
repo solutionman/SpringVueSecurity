@@ -13,6 +13,9 @@ public class DateParseUtils {
             if (dateToString.matches("\\d{4}-\\d{2}-\\d{2}")) {
                 return java.sql.Date.valueOf(dateToString);
             }
+            if(dateToString.charAt(1) == ' '){
+                dateToString = "0" + dateToString;
+            }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("ru"));
             LocalDate localDate = LocalDate.parse(dateToString, formatter);
             return java.sql.Date.valueOf(localDate);
