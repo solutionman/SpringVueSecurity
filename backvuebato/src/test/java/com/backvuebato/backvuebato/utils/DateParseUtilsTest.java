@@ -32,6 +32,10 @@ class DateParseUtilsTest {
     void sqlDateToStringTest() {
         Date date = Date.valueOf("1999-01-01");
         String formatted = dateParseUtils.sqlDateToString(date);
-        Assertions.assertEquals("01 января 1999", formatted);
+        Assertions.assertEquals("1 января 1999", formatted);
+
+        Date date2 = Date.valueOf("2020-11-15");
+        String formatted2 = dateParseUtils.sqlDateToString(date2);
+        Assertions.assertEquals("15 ноября 2020", formatted2);
     }
 }

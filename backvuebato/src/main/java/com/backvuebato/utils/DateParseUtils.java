@@ -13,7 +13,7 @@ public class DateParseUtils {
             if (dateToString.matches("\\d{4}-\\d{2}-\\d{2}")) {
                 return java.sql.Date.valueOf(dateToString);
             }
-            if(dateToString.charAt(1) == ' '){
+            if (dateToString.charAt(1) == ' ') {
                 dateToString = "0" + dateToString;
             }
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("ru"));
@@ -27,7 +27,11 @@ public class DateParseUtils {
     public String sqlDateToString(Date date) {
         try {
             LocalDate localDate = date.toLocalDate();
-            return localDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("ru")));
+            String converted = localDate.format(DateTimeFormatter.ofPattern("dd MMMM yyyy", new Locale("ru")));
+            if(converted.charAt(0) == '0'){
+                return converted.substring(1);
+            }
+            return converted;
         } catch (Exception e) {
             e.getMessage();
             return null;
