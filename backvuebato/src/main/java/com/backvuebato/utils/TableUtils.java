@@ -36,28 +36,7 @@ public class TableUtils {
         fieldsMapping.put("[firstname]", "firstname");
         fieldsMapping.put("[middlename]", "middlename");
         fieldsMapping.put("[birthday]", "birthday");
-        if (fieldsMapping.containsKey(orderBy)) {
-            forPageable = fieldsMapping.get(orderBy);
-        } else {
-            forPageable = "id";
-        }
-//
-//        switch (orderBy) {
-//            case "[familyname]":
-//                forPageable = "familyname";
-//                break;
-//            case "[firstname]":
-//                forPageable = "firstname";
-//                break;
-//            case "[middlename]":
-//                forPageable = "middlename";
-//                break;
-//            case "[birthday]":
-//                forPageable = "birthday";
-//                break;
-//            default:
-//                forPageable = "id";
-//        }
+        forPageable = fieldsMapping.getOrDefault(orderBy, "id");
         int currPage = parseInt(data.get("page").toString()) - 1;
         Pageable pageable = PageRequest.of(currPage, itemsPerPage, Sort.by(sortDesc.equals("[true]") ? Sort.Direction.DESC : Sort.Direction.ASC, forPageable));
         Page<Persons> page;
