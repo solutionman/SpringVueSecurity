@@ -16,6 +16,8 @@ mvn spring-boot:run
 npm install
 npm run serve
 
+export NODE_OPTIONS=--openssl-legacy-provider
+
 localhost:8081/frontvuebato/
 localhost:8081/frontvuebato/home
 
