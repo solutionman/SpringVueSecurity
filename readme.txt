@@ -19,6 +19,8 @@ this command run once (after Node.js 17.0 problem with ssl)
 export NODE_OPTIONS=--openssl-legacy-provider
 npm run serve -openssl-legacy-provider
 
+export NODE_OPTIONS=--openssl-legacy-provider
+
 localhost:8081/frontvuebato/
 localhost:8081/frontvuebato/home
 
