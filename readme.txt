@@ -13,8 +13,11 @@ run sql from /sql/tables.sql
 run without tomcat:
 
 mvn spring-boot:run
+
 npm install
-npm run serve
+this command run once (after Node.js 17.0 problem with ssl)
+export NODE_OPTIONS=--openssl-legacy-provider
+npm run serve -openssl-legacy-provider
 
 localhost:8081/frontvuebato/
 localhost:8081/frontvuebato/home
@@ -31,7 +34,7 @@ in webapps create new folder frontvuebato
 add WEB-INF from filesForTomcat to frontvuebato
 
 npm install
-npm run build
+npm run build -openssl-legacy-provider
 copy from dist to frontvuebato
 
 to config tomcat:
