@@ -6,16 +6,18 @@
 npm install
 ```
 
+export NODE_OPTIONS=--openssl-legacy-provider
+
 ### Compiles and hot-reloads for development
 
 ```
-npm run serve
+npm run serve -openssl-legacy-provider
 ```
 
 ### Compiles and minifies for production
 
 ```
-npm run build
+npm run build -openssl-legacy-provider
 ```
 
 ### Lints and fixes files
