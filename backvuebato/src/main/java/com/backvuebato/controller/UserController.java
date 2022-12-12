@@ -190,7 +190,7 @@ public class UserController {
             try {
                 Map<String, Object> p = (Map<String, Object>) pers;
                 int id = (int) p.get("id");
-                Persons person = personRepository.findByUserid(id);
+                Persons person = personRepository.findById(id);
                 Map<String, Object> profile = new HashMap<>();
                 profile.put("first_name", person.getFirstname());
                 profile.put("second_name", person.getFamilyname());
