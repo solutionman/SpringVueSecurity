@@ -6,7 +6,9 @@
 npm install
 ```
 
+```
 export NODE_OPTIONS=--openssl-legacy-provider
+```
 
 ### Compiles and hot-reloads for development
 
