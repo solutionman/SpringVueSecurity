@@ -56,8 +56,6 @@ public class UserController {
         profile.put("middle_name", person.getMiddlename());
         profile.put("birthday", person.getBirthday());
         profile.put("email", person.getEmail());
-        profile.put("username", user.getUsername());
-
         return profile;
     }
 
